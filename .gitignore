@@ -132,7 +132,7 @@ dmypy.json
 .DS_Store
 node_modules/
 /dist
-/public
+#/public
 
 # Log files
 npm-debug.log*
