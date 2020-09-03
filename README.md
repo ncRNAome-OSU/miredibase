@@ -1,2 +1,0 @@
-# miredibase
-miRNA Editing Database
