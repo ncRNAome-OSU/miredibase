@@ -10,8 +10,8 @@ To try MiREDiBase out on your local machine, proceed as follows:
  3. Unzip the *data.zip* file.
  4. Create a directory called *mbdata*.
  5. Within the MiREDiBase directory, modify the **.env** file setting up the database *name*, *username*, and *password*.
- 6. Open you *Command Prompt/Terminal*.
- 7. For the first run, exec the command `docker-compose -f docker-compose.yml up --build -d`. The command will create all the required Docker images and run the MiREDiBase application.
+ 6. Open you *Command Prompt/Terminal* and go to the MiREDiBase directory.
+ 7. For the first run ever, exec the command `docker-compose -f docker-compose.yml up --build -d`. The command will create all the required Docker images and run the MiREDiBase application.
  8. Once the installation is complete, open your browser and type *[localhost:8080](localhost:8080)* to use the MiREDiBase web interface and *[localhost:9001/docs](localhost:9001/docs)* to try out the RESTful API.
  9. When you are done, from within the MiREDiBase directory exec the command `docker-compose -f docker-compose.yml down` to stop MiREDiBase. executing the command `docker-compose -f docker-compose-prod.yml up -d`.
  10. You can completely uninstall MiREDiBase by running the command `docker-compose rm` from within the MiREDiBase directory.
