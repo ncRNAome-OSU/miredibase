@@ -1,5 +1,7 @@
 # Welcome to MiREDiBase!
 
+[![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+
 MiREDiBase (*miR*NA *Edi*ting Data*base*) is a catalog of known miRNA editing sites (*Adenosine-to-Inosine* and *Cytosine-to-Uracil*) and an online resource for functional prediction of miRNA editing. 
 
 ## How to run MiREDiBase on your local machine.
