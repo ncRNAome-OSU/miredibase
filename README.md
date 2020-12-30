@@ -28,14 +28,3 @@ If you have used any of the project code, please cite the following preprint:
 
 Gioacchino P. Marceca, Rosario Distefano, Luisa Tomasello, Alessandro Lagana’, Francesco Russo, Federica Calore, Giulia Romano, Marina Bagnoli, Pierluigi Gasparini, Alfredo Ferro, Mario Acunzo, Qin Ma, Carlo M. Croce, Giovanni Nigita. *MiREDiBase: a manually curated database of editing events in microRNAs*.
 bioRxiv 2020.09.04.283689; doi: https://doi.org/10.1101/2020.09.04.283689 
-
-||||||| 9905c03
-=======
-<hr />
-
-### References
-If you have used any of the project code, please cite the following preprint:
-
-Gioacchino P. Marceca, Rosario Distefano, Luisa Tomasello, Alessandro Lagana’, Francesco Russo, Federica Calore, Giulia Romano, Marina Bagnoli, Pierluigi Gasparini, Alfredo Ferro, Mario Acunzo, Qin Ma, Carlo M. Croce, Giovanni Nigita. *MiREDiBase: a manually curated database of editing events in microRNAs*.
-bioRxiv 2020.09.04.283689; doi: https://doi.org/10.1101/2020.09.04.283689 
->>>>>>> d3e3311fa4d6f20d2f5f0ed6602181e4825e440a
