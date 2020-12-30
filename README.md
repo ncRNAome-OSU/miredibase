@@ -2,7 +2,7 @@
 
 [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 
-MiREDiBase (*miR*NA *Edi*ting Data*base*) is a catalog of known miRNA editing sites (*Adenosine-to-Inosine* and *Cytosine-to-Uracil*) and an online resource for functional prediction of miRNA editing. 
+MiREDiBase (*miR*NA *Edi*ting Data*base*) is a catalog of validated and putative miRNA editing sites (*Adenosine-to-Inosine* and *Cytosine-to-Uracil*) and an online resource for functional prediction of miRNA editing. 
 
 ## How to run MiREDiBase on your local machine.
 To try MiREDiBase out on your local machine, proceed as follows:
@@ -25,5 +25,5 @@ More information about MiREDiBase can be found at [link](https://ncrnaome.osumc.
 ### References
 If you have used any of the project code, please cite the following preprint:
 
-Gioacchino P. Marceca, Rosario Distefano, Luisa Tomasello, Alessandro Lagana’, Francesco Russo, Federica Calore, Giulia Romano, Marina Bagnoli, Pierluigi Gasparini, Alfredo Ferro, Mario Acunzo, Qin Ma, Carlo M. Croce, Giovanni Nigita. *MiREDiBase: a manually curated database of editing events in microRNAs*.
+Gioacchino P. Marceca, Rosario Distefano, Luisa Tomasello, Alessandro Lagana’, Francesco Russo, Federica Calore, Giulia Romano, Marina Bagnoli, Pierluigi Gasparini, Alfredo Ferro, Mario Acunzo, Qin Ma, Carlo M. Croce, Giovanni Nigita. *MiREDiBase: a manually curated database of validated and putative editing events in microRNAs*.
 bioRxiv 2020.09.04.283689; doi: https://doi.org/10.1101/2020.09.04.283689 
