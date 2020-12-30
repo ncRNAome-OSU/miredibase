@@ -20,7 +20,6 @@ To try MiREDiBase out on your local machine, proceed as follows:
 
 More information about MiREDiBase can be found at [link](https://ncrnaome.osumc.edu/miredibase/).
 
-<<<<<<< HEAD
 <hr />
 
 ### References
