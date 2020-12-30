@@ -41,6 +41,10 @@
           <q-th colspan="5" class="bg-deep-orange-9 text-white">
             Stem-loop information
           </q-th>
+          <q-th colspan="3" class="bg-light-blue-9 text-white">
+            No. studies per detection method
+          </q-th>
+          <q-th></q-th>
         </q-tr>
         <q-tr>
           <q-th key="name" :props="props">
@@ -53,7 +57,7 @@
             key="organism" :props="props">
             Organism
           </q-th>
-          <q-th key="modType" :props="props" class="text-left">
+          <q-th key="modType" :props="props" class="text-center">
             RNA modification<br>type
           </q-th>
           <q-th key="chromosome" :props="props">
@@ -62,23 +66,37 @@
           <q-th key="strand" :props="props">
             Strand
           </q-th>
-          <q-th key="genomicPosition" :props="props" class="text-left">
-            Genomic position<br>(UCSC)
+          <q-th key="genomicPosition" :props="props" class="text-center">
+            Genomic&nbsp;&nbsp;&nbsp;&nbsp;<br>position&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>(UCSC)
           </q-th>
           <q-th key="stemloop" :props="props" class="bg-deep-orange-5 text-white">
             Stem-loop
           </q-th>
-          <q-th key="transcriptRegion" :props="props" class="bg-deep-orange-6 text-white text-left">
-            Edited transcript<br>region
+          <q-th key="transcriptRegion" :props="props" class="bg-deep-orange-6 text-white text-center">
+            Edited&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>transcript<br>
+            &nbsp;region
           </q-th>
-          <q-th key="stemloopRegionInvolved" :props="props" class="bg-deep-orange-7 text-white text-left">
-            Region<br>involved
+          <q-th key="stemloopRegionInvolved" :props="props" class="bg-deep-orange-7 text-white text-center">
+            Region&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>involved
           </q-th>
-          <q-th key="stemloopLocalPos" :props="props" class="bg-deep-orange-8 text-white text-left">
-            Local position<br>in stem-loop
+          <q-th key="stemloopLocalPos" :props="props" class="bg-deep-orange-8 text-white text-center">
+            Local position&nbsp;&nbsp;&nbsp;&nbsp;<br>in stem-loop
           </q-th>
-          <q-th key="mirnaLocalPos" :props="props" class="bg-deep-orange-9 text-white text-left">
+          <q-th key="mirnaLocalPos" :props="props" class="bg-deep-orange-9 text-white text-center">
             Local position<br>in miRNA
+          </q-th>
+          <q-th key="numberHighThroughputStudies" :props="props" class="bg-light-blue-7 text-white text-center">
+            High&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+            throughput<br>&nbsp;&nbsp;&nbsp;methods
+          </q-th>
+          <q-th key="numberEnzymePerturbationStudies" :props="props" class="bg-light-blue-8 text-white text-center">
+            Enzyme&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>perturbation
+          </q-th>
+          <q-th key="numberTargetedMethodStudies" :props="props" class="bg-light-blue-9 text-white text-center">
+            Targeted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>methods
+          </q-th>
+          <q-th key="isPutative" :props="props" class="bg-light-green-9 text-white text-center">
+            Is it putative?
           </q-th>
         </q-tr>
       </template>
@@ -128,6 +146,10 @@
           color="purple"
           @click="goToExternaResource(`http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=${props.row.stemloop_acc_number}`)"
         />
+      </q-td>
+
+      <q-td slot="body-cell-isPutative" slot-scope="props" :props="props">
+        <q-chip :color="setIsPutativeColor(props.value)" text-color="white">{{ isPutative(props.value) }}</q-chip>
       </q-td>
 
     </q-table>
@@ -190,6 +212,14 @@ export default {
 
     prettifySnvType (value) {
       return this.$utils.prettifySnvType(value)
+    },
+
+    isPutative (value) {
+      return value ? 'yes' : 'no'
+    },
+
+    setIsPutativeColor (value) {
+      return value ? 'amber-14' : 'light-green-8'
     },
 
     goToExternaResource (url) {

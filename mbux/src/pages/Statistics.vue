@@ -1,6 +1,5 @@
 <template>
   <q-page padding>
-    <!-- content -->
     <p class="text-h5 text-weight-light">Statistics</p>
     <q-separator spaced />
     <p class="text-weight-light text-justify">
@@ -37,8 +36,7 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 flex flex-center text-weight-light text-justify q-pa-lg">
               <p>
-                Distribution of A-to-I and C-to-U editing events per chromosome in the human genome.
-                The numbers in brackets represent the number of edited miRNA transcripts per chromosome.
+                Distribution of validated and putative A-to-I and C-to-U editing events per chromosome in the human genome.
               </p>
               <q-img
                 class="shadow-none"
@@ -52,9 +50,9 @@
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 flex flex-center text-weight-light text-justify q-pa-lg">
               <p>
-                Distribution of A-to-I editing events across the three different regions of primary miRNA
+                Distribution of validated and putative A-to-I editing events across the three regions of primary miRNA
                 transcripts and distribution of editing sites falling into mature miRNAs across nucleotide
-                positions. Editing sites falling in positions 24-27 were not shown in the mature sequence.
+                positions. Editing sites occurring in positions 24-27 were not shown in the mature sequence.
               </p>
               <q-img
                 class="shadow-none"
@@ -63,9 +61,9 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 flex flex-center text-weight-light text-justify q-pa-lg">
               <p>
-                Distribution of C-to-U editing events across the three different regions of primary miRNA
+                Distribution of validated and putative C-to-U editing events across the three regions of primary miRNA
                 transcripts and distribution of editing sites falling into mature miRNAs across nucleotide
-                positions. Editing sites falling in positions 24-27 were not shown in the mature sequence.
+                positions.<br><br>
               </p>
               <q-img
                 class="shadow-none"
@@ -130,8 +128,7 @@
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 flex flex-center text-weight-light text-justify q-pa-lg">
               <p>
-                Distribution of A-to-I and C-to-U editing events per chromosome in the chimpanzee genome.
-                The numbers in brackets represent the number of edited miRNA transcripts per chromosome.
+                Distribution of validated and putative A-to-I and C-to-U editing events per chromosome in the chimpanzee genome.
               </p>
               <q-img
                 class="shadow-none"
@@ -140,9 +137,8 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-weight-light text-justify q-pa-lg">
               <p>
-                Distribution of A-to-I editing events across the three different regions of primary miRNA transcripts
+                Distribution of validated and putative A-to-I editing events across the three regions of primary miRNA transcripts
                 and distribution of editing sites falling into mature miRNAs across nucleotide positions.
-                Editing sites falling in positions 24-27 were not shown in the mature sequence.
               </p>
               <center>
                 <q-img
@@ -189,8 +185,7 @@
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 flex flex-center text-weight-light text-justify q-pa-lg">
               <p>
-                Distribution of A-to-I and C-to-U editing events per chromosome in the gorilla genome.
-                The numbers in brackets represent the number of edited miRNA transcripts per chromosome.
+                Distribution of validated and putative A-to-I and C-to-U editing events per chromosome in the gorilla genome.
               </p>
               <q-img
                 class="shadow-none"
@@ -199,9 +194,8 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-weight-light text-justify q-pa-lg">
               <p>
-                Distribution of A-to-I editing events across the three different regions of primary miRNA transcripts
+                Distribution of validated and putative A-to-I editing events across the three regions of primary miRNA transcripts
                 and distribution of editing sites falling into mature miRNAs across nucleotide positions.
-                Editing sites falling in positions 24-27 were not shown in the mature sequence.
               </p>
               <center>
                 <q-img
@@ -255,8 +249,7 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 flex flex-center text-weight-light text-justify q-pa-lg">
               <p>
-                Distribution of A-to-I and C-to-U editing events per chromosome in the macaque genome.
-                The numbers in brackets represent the number of edited miRNA transcripts per chromosome.
+                Distribution of validated and putative A-to-I and C-to-U editing events per chromosome in the macaque genome.
               </p>
               <q-img
                 class="shadow-none"
@@ -270,9 +263,8 @@
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 flex flex-center text-weight-light text-justify q-pa-lg">
               <p>
-                Distribution of A-to-I editing events across the three different regions of primary miRNA
+                Distribution of validated and putative A-to-I editing events across the three regions of primary miRNA
                 transcripts and distribution of editing sites falling into mature miRNAs across nucleotide
-                positions. Editing sites falling in positions 24-27 were not shown in the mature sequence.
               </p>
               <q-img
                 class="shadow-none"
@@ -419,7 +411,6 @@ export default {
       return this.$utils.isObjectNotEmpty(value)
     },
 
-    // Handle the mirna select box options
     formatOrganismDataTable (data) {
       if (this.isObjectNotEmpty(data)) {
         const pubmedIdsList = []

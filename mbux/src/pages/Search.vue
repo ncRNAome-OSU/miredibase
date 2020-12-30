@@ -1,7 +1,6 @@
 <template>
   <q-page padding>
 
-    <!-- content -->
     <search-form
       @sendSearchResponse="loadResultsData"
     />
@@ -39,7 +38,11 @@ export default {
           'transcriptRegion',
           'stemloopRegionInvolved',
           'stemloopLocalPos',
-          'mirnaLocalPos'
+          'mirnaLocalPos',
+          'numberHighThroughputStudies',
+          'numberEnzymePerturbationStudies',
+          'numberTargetedMethodStudies',
+          'isPutative'
         ],
         data: [],
         columns: [
@@ -132,6 +135,37 @@ export default {
             sortable: true,
             align: 'center',
             sort: (a, b, rowA, rowB) => parseInt(a, 10) - parseInt(b, 10)
+          },
+          {
+            name: 'numberHighThroughputStudies',
+            label: 'High throughput method',
+            field: 'number_high_throughput_studies',
+            sortable: true,
+            align: 'center',
+            sort: (a, b, rowA, rowB) => parseInt(a, 10) - parseInt(b, 10)
+          },
+          {
+            name: 'numberEnzymePerturbationStudies',
+            label: 'Enzyme perturbation',
+            field: 'number_enzyme_perturbation_studies',
+            sortable: true,
+            align: 'center',
+            sort: (a, b, rowA, rowB) => parseInt(a, 10) - parseInt(b, 10)
+          },
+          {
+            name: 'numberTargetedMethodStudies',
+            label: 'Targeted method',
+            field: 'number_targeted_method_studies',
+            sortable: true,
+            align: 'center',
+            sort: (a, b, rowA, rowB) => parseInt(a, 10) - parseInt(b, 10)
+          },
+          {
+            name: 'isPutative',
+            label: 'Is putative?',
+            field: 'is_putative',
+            sortable: true,
+            align: 'center'
           }
         ]
       }

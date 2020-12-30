@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-@author: Rosario Distefano
-@email: rosario.distefano@osumc.edu
-"""
-
 from bson.objectid import ObjectId
 from config.config import DB, CONF
 from fastapi import APIRouter, Depends, HTTPException
@@ -31,6 +25,11 @@ mb_router = APIRouter()
 def validate_chromosome_range(start: Optional[int] = None, end: Optional[int] = None):
     if isinstance(start, int) and isinstance(end, int):
         if start < 0 or end < 0 or start > end:
+            if CONF["fastapi"].get("debug", False):
+                logging.warning(
+                    "Invalid chromosome range. The `start` and `end` values "\
+                    "must be positive integers, with start <= end."
+                )
             raise HTTPException(
                 status_code=400,
                 detail="Invalid chromosome range. The `start` and `end` values "\
@@ -39,6 +38,11 @@ def validate_chromosome_range(start: Optional[int] = None, end: Optional[int] = 
         return { "$gte": start, "$lte": end }
     elif isinstance(start, int):
         if start < 0:
+            if CONF["fastapi"].get("debug", False):
+                logging.warning(
+                    "Invalid chromosome start. The `start` value must be "\
+                    "a positive integer."
+                )
             raise HTTPException(
                 status_code=400, 
                 detail="The `start` value must be a positive integer."
@@ -46,6 +50,11 @@ def validate_chromosome_range(start: Optional[int] = None, end: Optional[int] = 
         return { "$gte": start }
     elif isinstance(end, int):
         if end < 0:
+            if CONF["fastapi"].get("debug", False):
+                logging.warning(
+                    "Invalid chromosome end. The `end` value must be "\
+                    "a positive integer."
+                )
             raise HTTPException(
                 status_code=400, 
                 detail="The `end` value must be a positive integer."
@@ -53,6 +62,23 @@ def validate_chromosome_range(start: Optional[int] = None, end: Optional[int] = 
         return { "$lte": end }
     else:
         return {}
+
+def validate_object_id(id_: str):
+    try:
+        _id = ObjectId(id_)
+    except Exception:
+        if CONF["fastapi"].get("debug", False):
+            logging.warning("Invalid Object ID")
+        raise HTTPException(status_code=400)
+    return _id
+
+async def _get_pet_or_404(id_: str):
+    _id = validate_object_id(id_)
+    pet = await DB.editing_sites.find().limit(1)
+    if pet:
+        return pet
+    else:
+        raise HTTPException(status_code=404, detail="Pet not found")
 
 @mb_router.get("/")
 async def get_welcome():
@@ -118,11 +144,11 @@ async def get_mirnas(item: OrganismKindRNAmod):
 @mb_router.post(
     "/organisms/premirnas/",
     response_model=List[str],
-    summary="Get the organism's stem-loops list"
+    summary="Get the organism's pre-miRNAs (stem-loop) list"
 )
 async def get_premirnas(item: OrganismKindRNAmod):
     """
-    Endpoint to retrieve the organisms's stemloops.
+    Endpoint to retrieve the organisms's pre-miRNAs.
     """
     cursor = await DB.editing_sites.distinct(
         "stemloop", 
@@ -169,6 +195,7 @@ async def get_biological_sources(item: OrganismKindRNAmodChrStemloopMirna):
 )
 async def get_studies(item: OrganismKind):
     """Endpoint to retrieve the database studies list."""
+
     pipe = [
         {
             '$match': {
@@ -257,6 +284,10 @@ async def get_editing_site_detail(item: SearchByRNAES):
                     "mirna_acc_number": { "$first": "$mirna_acc_number" },
                     "mirna_local_pos": { "$first": "$mirna_local_pos" },
                     "rnafold_stemloop": { "$first": "$rnafold_stemloop" },
+                    "number_high_throughput_studies": { "$first": "$number_high_throughput_studies" },
+                    "number_enzyme_perturbation_studies": { "$first": "$number_enzyme_perturbation_studies" },
+                    "number_targeted_method_studies": { "$first": "$number_targeted_method_studies" },
+                    "is_putative": { "$first": "$is_putative" },
                     "studies": { 
                         "$push":  "$studies"
                     },
@@ -281,6 +312,10 @@ async def get_editing_site_detail(item: SearchByRNAES):
                     "mirna_acc_number": 1,
                     "mirna_local_pos": 1,
                     "rnafold_stemloop": 1,
+                    "number_high_throughput_studies": 1,
+                    "number_enzyme_perturbation_studies": 1,
+                    "number_targeted_method_studies": 1,
+                    "is_putative": 1,
                     "studies": 1,
                     "uri": 1,
                     "prediction": 1,
@@ -314,6 +349,10 @@ async def get_editing_site_detail(item: SearchByRNAES):
                     "mirna_acc_number": { "$first": "$mirna_acc_number" },
                     "mirna_local_pos": { "$first": "$mirna_local_pos" },
                     "rnafold_stemloop": { "$first": "$rnafold_stemloop" },
+                    "number_high_throughput_studies": { "$first": "$number_high_throughput_studies" },
+                    "number_enzyme_perturbation_studies": { "$first": "$number_enzyme_perturbation_studies" },
+                    "number_targeted_method_studies": { "$first": "$number_targeted_method_studies" },
+                    "is_putative": { "$first": "$is_putative" },
                     "studies": { 
                         "$push":  "$studies"
                     },
@@ -338,6 +377,10 @@ async def get_editing_site_detail(item: SearchByRNAES):
                     "mirna_acc_number": 1,
                     "mirna_local_pos": 1,
                     "rnafold_stemloop": 1,
+                    "number_high_throughput_studies": 1,
+                    "number_enzyme_perturbation_studies": 1,
+                    "number_targeted_method_studies": 1,
+                    "is_putative": 1,
                     "studies": 1,
                     "uri": 1,
                     "prediction": 1,
@@ -370,6 +413,10 @@ async def get_editing_site_detail(item: SearchByRNAES):
                 "mirna_seq": 1,
                 "motif_5_to_3": 1,
                 "rnafold_stemloop": 1,
+                "number_high_throughput_studies": 1,
+                "number_enzyme_perturbation_studies": 1,
+                "number_targeted_method_studies": 1,
+                "is_putative": 1,
                 "studies": 1,
                 "uri": 1,
                 "prediction": 1,
@@ -470,7 +517,7 @@ async def get_editing_sites(item: SearchBy):
     """
     Endpoint to retrieve the organisms's RNA Editing sites, according to
     a specific modification type (e.g., A-to-I). Optionally, it is possible
-    to restrict results to a particular Chromosome, miRNA, or stemloop.
+    to restrict results to a particular Chromosome, miRNA, or pre-miRNA.
     """
     chrom_range = validate_chromosome_range(item.start, item.end)
 
@@ -513,6 +560,10 @@ async def get_editing_sites(item: SearchBy):
             "uri": 1,
             "prediction": 1,
             "enrichment": 1,
+            "number_high_throughput_studies": 1,
+            "number_enzyme_perturbation_studies": 1,
+            "number_targeted_method_studies": 1,
+            "is_putative": 1,
             "_id": 0
         }
     )
@@ -571,7 +622,7 @@ async def get_comparison_rna_modification_types(item: OrganismKind):
 )
 async def get_comparison_premirnas(item: OrganismKindRNAmod):
     """
-    Endpoint to retrieve a list of stem-loops (stemloops) for a specific
+    Endpoint to retrieve a list of stem-loops (pre-miRNAs) for a specific
     organism and RNA modification type for the comparison analysis.
     """
     cursor = await DB.case_vs_control_comparison.distinct(
@@ -612,7 +663,7 @@ async def get_comparison_diseases(item: OrganismKindRNAmod):
 async def get_editing_site_comparison(item: CompareBy):
     """
     Endpoint to retrieve the organisms's case versus control comparisons , according to
-    a specific modification type (e.g., A-to-I), biological source/stemloop.
+    a specific modification type (e.g., A-to-I), biological source/pre-miRNA.
     """
     query = {
         "organism": item.organism,

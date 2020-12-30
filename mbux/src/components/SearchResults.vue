@@ -1,34 +1,26 @@
 <template>
   <q-page>
     <div v-if="isObjectNotEmpty(data)">
-      <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 q-pa-xs">
-          <p class="text-justify text-weight-light">
-            <helper>
-              Click on the red icons to display summary tables.
-            </helper>
-            Here you can explore overview information and the
-            list of available studies for each RNA modification site. Thermodynamic and functional predictions are
-            also provided (whether available).
-          </p>
+      <div class="q-pa-xs">
+        <p class="text-justify text-weight-light">
+          <helper>
+            Click on the red icons to display summary tables.
+          </helper>
+          Here you can explore overview information and the
+          list of available studies for each RNA modification site. Thermodynamic and functional predictions are
+          also provided (whether available).
+        </p>
 
-          <table-viewer
-            title="RNA modification sites"
-            :data="data"
-            :columns="columns"
-            first-columns-header-color="primary"
-            row-key="name"
-            :is-downloadable="isDownloadable"
-            @loadSNVData="loadSNVData($event)"
-            :visible-columns="visibleColumns"
-          />
-
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 q-pa-xs">
-          <div v-if="$store.state.showcase.renderSearchTabPanels">
-            <snv-overview-details :study-data="snvDataDetails" />
-          </div>
-        </div>
+        <table-viewer
+          title="RNA modification sites"
+          :data="data"
+          :columns="columns"
+          first-columns-header-color="primary"
+          row-key="name"
+          :is-downloadable="isDownloadable"
+          @loadSNVData="loadSNVData($event)"
+          :visible-columns="visibleColumns"
+        />
       </div>
 
       <div v-if="$store.state.showcase.renderSearchTabPanels">
@@ -48,22 +40,20 @@
           class="bg-grey-1 no-shadow"
         >
           <q-tab-panel name="tab1" class="q-pa-xs">
-            <q-space />
+            <snv-overview-details :study-data="snvDataDetails" />
+            <q-separator spaced color="grey-1" />
             <snv-overview :snv-data="snvData" />
           </q-tab-panel>
 
           <q-tab-panel name="tab2" class="q-pa-xs">
-            <q-space />
             <snv-thermodynamics :snv-data="snvData" />
           </q-tab-panel>
 
           <q-tab-panel name="tab3" class="q-pa-xs">
-            <q-space />
             <snv-prediction :snv-data="snvData" />
           </q-tab-panel>
 
           <q-tab-panel name="tab4" class="q-pa-xs">
-            <q-space />
             <snv-enrichment :snv-data="snvData" />
           </q-tab-panel>
         </q-tab-panels>

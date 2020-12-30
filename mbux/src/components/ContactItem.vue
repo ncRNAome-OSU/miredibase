@@ -1,5 +1,4 @@
 <template>
-
   <q-card class="text-weight-light q-mb-xs">
 
     <q-card-section horizontal>

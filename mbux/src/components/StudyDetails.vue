@@ -8,54 +8,11 @@
       </div>
 
       <q-separator spaced />
-      <div class="row text-weight-light">
-        <div class="col-3 q-pr-md">
-          <p class="text-weight-light text-justify">
-            Find detailed information about biological sources, experiment type, detection/validation methods,
-            comparisons between normal and adverse conditions, and editing levels. Information on techniques
-            for functional characterization is related to edited mature miRNAs only.
-          </p>
-        </div>
-        <div class="col-9 q-pr-xs">
-
-          <p class="text-weight-bold">
-            Validation methods and functional characterization
-          </p>
-          <template v-for="item in dataField.validation">
-            {{ item.label }}:
-            <q-chip square outline color="deep-orange-9" text-color="white" :key="item.key" class="text-weight-bold">
-              {{ item.value }}
-            </q-chip>
-          </template>
-
-          <q-separator spaced />
-
-          <p class="text-weight-bold">
-            Site-specific detection methods
-          </p>
-          <template v-for="item in dataField.detection">
-            {{ item.label }}:
-            <q-chip square outline color="deep-orange-9" text-color="white" :key="item.key" class="text-weight-bold">
-              {{ item.value }}
-            </q-chip>
-          </template>
-
-          <q-separator spaced />
-
-          <p class="text-weight-bold">
-            Verification methods
-          </p>
-          <template v-for="item in dataField.verification">
-            {{ item.label }}:
-            <q-chip square outline color="deep-orange-9" text-color="white" :key="item.key" class="text-weight-bold">
-              {{ item.value }}
-            </q-chip>
-          </template>
-
-        </div>
-      </div>
-
-      <q-separator spaced />
+      <span class="text-weight-light text-justify">
+        Find detailed information about biological sources, experiment type, detection/validation methods,
+        comparisons between normal and adverse conditions, and editing levels. Information on techniques
+        for functional characterization is related to edited mature miRNAs only.
+      </span>
     </q-card-section>
     <q-card-section class="q-pa-none">
       <q-table
@@ -173,52 +130,6 @@ export default {
   },
   data () {
     return {
-      dataField: {
-        validation: [],
-        detection: [],
-        verification: []
-      },
-      methods: {
-        validation: [
-          'pcr_rt',
-          'western_blot',
-          'luciferase',
-          'others'
-        ],
-        detection: [
-          'rt_targeted',
-          'rt_hts',
-          'mir_mmpcr_seq',
-          'peb',
-          'snapshot_assay'
-        ],
-        verification: [
-          'enzyme_kd',
-          'enzyme_ko',
-          'differential_enzyme_transfection',
-          'hrm',
-          'site_specific_cleavage',
-          'tlc'
-        ]
-      },
-      fieldsMap: {
-        pcr_rt: 'PCR-RT',
-        western_blot: 'Western blot',
-        luciferase: 'Luciferase',
-        others: 'Others',
-        rt_targeted: 'RT (targeted)',
-        rt_hts: 'RT (HTS)',
-        mir_mmpcr_seq: 'miR-mmPCR-seq',
-        rip_seq: 'RIP-seq',
-        peb: 'PEB',
-        snapshot_assay: 'SNaPshot assay',
-        enzyme_kd: 'Enzyme KD',
-        enzyme_ko: 'Enzyme KO',
-        differential_enzyme_transfection: 'Differential enzyme tranfection',
-        hrm: 'HRM',
-        site_specific_cleavage: 'Site-specific cleavage',
-        tlc: 'TLC'
-      },
       data: [],
       columns: [
         {
@@ -422,56 +333,6 @@ export default {
     initDialogData (data) {
       if (this.isObjectNotEmpty(data)) {
         this.initDataTableRows(data)
-        this.dataField.validation = []
-        if (this.objectHasPropery(data, 'validation_methods_and_functional_characterization')) {
-          const item = data.validation_methods_and_functional_characterization
-          this.methods.validation.forEach((key) => {
-            if (this.objectHasPropery(item, key)) {
-              if (item[key] !== null) {
-                const label = this.fieldsMap[key]
-                const value = item[key]
-
-                if (label !== null && value !== null) {
-                  this.dataField.validation.push({ key: key, label: label, value: value })
-                }
-              }
-            }
-          })
-        }
-
-        this.dataField.detection = []
-        if (this.objectHasPropery(data, 'site_specific_detection_methods')) {
-          const item = data.site_specific_detection_methods
-          this.methods.detection.forEach((key) => {
-            if (this.objectHasPropery(item, key)) {
-              if (item[key] !== null) {
-                const label = this.fieldsMap[key]
-                const value = item[key]
-
-                if (label !== null && value !== null) {
-                  this.dataField.detection.push({ key: key, label: label, value: value })
-                }
-              }
-            }
-          })
-        }
-
-        this.dataField.verification = []
-        if (this.objectHasPropery(data, 'verification_methods')) {
-          const item = data.verification_methods
-          this.methods.verification.forEach((key) => {
-            if (this.objectHasPropery(item, key)) {
-              if (item[key] !== null) {
-                const label = this.fieldsMap[key]
-                const value = item[key]
-
-                if (label !== null && value !== null) {
-                  this.dataField.verification.push({ key: key, label: label, value: value })
-                }
-              }
-            }
-          })
-        }
       }
     }
   },

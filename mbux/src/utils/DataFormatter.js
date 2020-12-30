@@ -1,28 +1,8 @@
-// import { format, scroll } from 'quasar'
 import { format } from 'quasar'
-// const { getScrollTarget, setScrollPosition } = scroll
 const { capitalize } = format
 
 const utils = {
   scrollToElement (elementId, scrollType = 'top', duration = 100) {
-    /*
-    const el = document.getElementById(elementId)
-    if (this.isNotNull(el)) {
-      const target = getScrollTarget(el)
-      let offset = el.offsetTop
-      switch (this.toLowerCase(scrollType)) {
-        case 'bottom':
-          offset = el.offsetBottom
-          break
-        case 'height':
-          offset = el.scrollHeight
-          break
-        default:
-          break
-      }
-      setScrollPosition(target, offset, duration)
-    }
-    */
     const el = document.getElementById(elementId)
     if (this.isNotNull(el)) {
       window.scrollTo(0, el.offsetTop)
@@ -62,7 +42,6 @@ const utils = {
           target.push({ label: this.prettifySnvType(e), value: e })
           break
         default:
-          // target.push({ label: e, value: e })
           target.push(e)
           break
       }
@@ -129,6 +108,93 @@ const utils = {
 
           if (label !== null && value !== null) {
             response.push({ key: key, label: label, value: value, link: link })
+          }
+        }
+      })
+    }
+    return response
+  },
+  setSnvDetailstableRow (data, labelsList) {
+    const response = { name: 0 }
+    if (this.isObjectNotEmpty(data)) {
+      labelsList.forEach((key) => {
+        if (this.objectHasPropery(data, key)) {
+          switch (key) {
+            case 'organism':
+            case 'chromosome':
+              response[key] = this.capitalize(data[key])
+              break
+            case 'mod_type':
+              response[key] = this.prettifySnvType(data[key])
+              break
+            case 'transcript_region':
+            case 'strand':
+            case 'is_putative':
+              response[key] = data[key]
+              break
+            case 'genomic_position':
+              response[key] = {
+                value: data[key],
+                link: data.uri.ucsc
+              }
+              break
+            case 'stemloop':
+              response[key] = {
+                value: data[key],
+                link: `http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=${data.stemloop_acc_number}`
+              }
+              break
+            case 'stemloop_local_pos':
+              if (data[key] !== null) {
+                response[key] = data[key]
+              }
+              break
+            case 'stemloop_region_involved':
+              if (data[key] !== null) {
+                response[key] = data[key]
+              }
+              break
+            case 'mirna':
+              if (data[key] !== null) {
+                response[key] = {
+                  value: data[key],
+                  link: `http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=${data.mirna_acc_number}`
+                }
+              }
+              break
+            case 'mirna_local_pos':
+              if (data[key] !== null) {
+                response[key] = data[key]
+              }
+              break
+            case 'uri':
+              if (data[key].darned !== null) {
+                response.darned = {
+                  value: 'Darned',
+                  link: data.uri.darned
+                }
+              }
+              if (data[key].radar !== null) {
+                response.radar = {
+                  value: 'Radar',
+                  link: data.uri.radar
+                }
+              }
+              if (data[key].rediportal !== null) {
+                response.rediportal = {
+                  value: 'REDIportal',
+                  link: data.uri.rediportal
+                }
+              }
+              if (data[key].ucsc !== null) {
+                response.ucsc = {
+                  value: 'UCSC',
+                  link: data.uri.ucsc
+                }
+              }
+              break
+            default:
+              break
           }
         }
       })

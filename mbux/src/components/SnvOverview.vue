@@ -99,6 +99,69 @@ export default {
             align: 'center'
           },
           {
+            name: 'ngs',
+            label: 'NGS',
+            field: 'ngs',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            name: 'miRmmPCRSeq',
+            label: 'miR-mmPCR-seq',
+            field: 'mir_mmpcr_seq',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            name: 'ripSeq',
+            label: 'RIP-Seq',
+            field: 'rip_seq',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            name: 'enzymeKd',
+            label: 'Enzyme KD',
+            field: 'enzyme_kd',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            name: 'enzymeKo',
+            label: 'Enzyme KO',
+            field: 'enzyme_ko',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            name: 'differentialTransfection',
+            label: 'Differential transfection',
+            field: 'differential_transfection',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            name: 'sangerSequencing',
+            label: 'Sanger sequencing',
+            field: 'sanger_sequencing',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            name: 'snapshotAssay',
+            label: 'SNaPshot assay',
+            field: 'snapshot_assay',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            name: 'siteSpecificCleavage',
+            label: 'Site specific cleavage',
+            field: 'site_specific_cleavage',
+            sortable: true,
+            align: 'center'
+          },
+          {
             name: 'enzymeSelectivity',
             label: 'Enzyme selectivity',
             field: 'enzyme_selectivity',

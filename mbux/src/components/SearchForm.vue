@@ -228,9 +228,6 @@
                 </q-card-section>
                 <q-separator vertical />
                 <q-card-section style="width: 100%">
-                  <span class="text-weight-light text-grey-7">
-                    NOTE: This field is optional. here you can filter out results by specifying single or multiple biological sources.
-                  </span>
                   <div class="row q-gutter-md">
                     <div class="col">
                       <q-select

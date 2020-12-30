@@ -8,7 +8,7 @@
           <p>
             Welcome to MiREDiBase (<span style="text-decoration: underline">miR</span>NA
             <span style="text-decoration: underline">Edi</span>ting Data<span style="text-decoration: underline">base</span>),
-            a catalog of known miRNA editing sites and an online resource for functional prediction of
+            a catalog of validated and putative miRNA editing sites from literature and an online resource for functional prediction of
             miRNA editing. Here, users can explore
             multiple features related to miRNA modification events, such as detection and
             validation methods, experiment type, biological sources, enzyme affinity,
@@ -35,12 +35,11 @@
             and adverse conditions.
           </p>
           <p class="text-justify">
-            The current version of the database contains information on A-to-I (Adenosine-to-Inosine)
+            The current version of the database contains information on validated and putative A-to-I (Adenosine-to-Inosine)
             and C-to-U (Cytosine-to-Uracil) miRNA modifications in humans and primates.
           </p>
           <div class="text-right">
             <p>
-              <!-- https://cen.acs.org/business/start-ups/WatchCRISPR-RNA-editing-race/97/i12 -->
               Thank you for visiting us!
             </p>
             <p>
@@ -168,14 +167,14 @@ export default {
     loadCookieMessage () {
       this.$q.notify({
         message: 'MiREDiBase uses cookies only for functional and analytical purposes. ',
+        progress: true,
         color: 'primary',
         position: 'top',
         role: 'alertdialog',
         type: 'info',
         actions: [
           { label: 'Got it!', color: 'white', handler: () => { /* ... */ } }
-        ],
-        timeout: 0
+        ]
       })
     }
 

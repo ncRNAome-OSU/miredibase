@@ -1,6 +1,5 @@
 <template>
   <q-page padding>
-    <!-- content -->
     <span class="text-h5 text-weight-light" id="documentHeader">Documentation</span>
     <q-separator spaced />
     <div class="row">
@@ -94,10 +93,10 @@
             <q-tab-panel name="searchTab">
               <p class="text-h6 text-weight-light text-justify">How to use <i>Search</i>.</p>
               <p id="searchHowTo">
-                Searching into MiREDiBase has been rendered pretty simple. It requires no bioinformatics skills to perform accurate
-                searches across the database, and its user-friendly interface allows to keep track of each search step, as to improve your experience.<br><br>
+                Searching into MiREDiBase has been rendered pretty simple. It requires no bioinformatics skills to perform accurate searches
+                across the database, and its user-friendly interface allows to keep track of each search step, as to improve your experience.<br><br>
 
-                Once in the "Search" section, you can retrieve miRNA editing sites by providing specific information in the "Search form".
+                Once in the "Search" section, you can retrieve validated and putative miRNA editing sites by providing specific information in the "Search form".
               </p>
               <center>
                 <q-img
@@ -203,18 +202,6 @@
               <br><br>
 
               <p>
-                How to visualize more records per page.
-              </p>
-              <center>
-                <q-img
-                  class="shadow-1"
-                  src="documentation/fig11.png"
-                  style="max-width:800px"
-                />
-              </center>
-              <br><br>
-
-              <p>
                 Information about the miRNA stem-loop are subdivided as reported in the table.
               </p>
               <center>
@@ -256,7 +243,7 @@
 
               <p>
                 Right above the "RNA Modification site studies" table, a summary bar will be displayed, summing up basic information about the selected editing site.
-                Four selecting boxes are displayed in between, allowing you to navigate across four distinc sections. The "RNA Modification site studies" table is
+                Four selecting boxes are displayed in between, allowing you to navigate across four distinct sections. The "RNA Modification site studies" table is
                 included in the "Overview" section, which is showed by default. The other three sections are dedicated to predictive information and are illustrated
                 in the next subsection (<span class="text-bold">1.2 Predictions</span>).
               </p>
@@ -264,6 +251,51 @@
                 <q-img
                   class="shadow-1"
                   src="documentation/fig15.png"
+                  style="max-width:800px"
+                />
+              </center>
+              <br><br>
+
+              <p>
+                Values in the column "Is it putative?" indicate whether an editing site is putative or not. In particular:
+              </p>
+                <ul>
+                  <li>Yes = putative (i.e., it was detected by high-throughput sequencing methods but has never been validated by targeted methods);</li>
+                  <li>No = validated (i.e., it has been validated by targeted methods at least by one study).</li>
+                </ul>
+              <p>
+                We assumed that the presence of enzyme perturbation experiments is not enough to state that an editing site is validated. Values in the columns
+                "high-throughput methods" and "targeted methods" represent the number of studies that identified the editing site in question by high-throughput
+                and low-throughput sequencing, respectively.<br>
+                Values in the column "enzyme perturbation" represent the number of studies that carried out enzyme perturbation experiments to increase the
+                reliability of editing site detection.
+              </p>
+              <center>
+                <q-img
+                  class="shadow-1"
+                  src="documentation/fig15.1.png"
+                  style="max-width:800px"
+                />
+              </center>
+              <br><br>
+
+              <p>
+                For each editing site, information about detection methods and enzyme perturbation experiments are shown in more details under the
+                "RNA modification site studies" section. Specifically:
+              </p>
+                <ul>
+                  <li>High-throughput methods are subdivided in: NGS, miR-mmPCR-seq, and RIP-seq;</li>
+                  <li>Targeted methods are subdivided in: Sanger sequencing, SNaPshot assay, and site-specific cleavage;</li>
+                  <li>Enzyme perturbation experiments are subdivided in: enzyme knockdown (KD), enzyme knockout (KO), and differential transfection.</li>
+                </ul>
+              <p>
+                In addition, the "RNA modification site studies" section reports information about functional effects on miRNA biogenesis/target-binding ability
+                (see the "Functional consequences" column), as well as enzyme affinity for the editing site in question (see the "Enzyme selectivity" column).
+              </p>
+              <center>
+                <q-img
+                  class="shadow-1"
+                  src="documentation/fig15.2.png"
                   style="max-width:800px"
                 />
               </center>
