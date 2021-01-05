@@ -28,3 +28,5 @@ If you have used any of the project code, please cite the following preprint:
 
 Gioacchino P. Marceca, Rosario Distefano, Luisa Tomasello, Alessandro Lagana’, Francesco Russo, Federica Calore, Giulia Romano, Marina Bagnoli, Pierluigi Gasparini, Alfredo Ferro, Mario Acunzo, Qin Ma, Carlo M. Croce, Giovanni Nigita. *MiREDiBase: a manually curated database of validated and putative editing events in microRNAs*.
 bioRxiv 2020.09.04.283689v3; doi: https://doi.org/10.1101/2020.09.04.283689
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4404687.svg)](https://doi.org/10.5281/zenodo.4404687)
