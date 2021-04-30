@@ -7,13 +7,27 @@
     <q-timeline layout="comfortable" side="right" color="secondary">
       <q-timeline-entry heading>Timeline</q-timeline-entry>
 
+      <q-timeline-entry heading>April, 2021</q-timeline-entry>
+
+      <q-timeline-entry
+        title="MiREDiBase v1.0"
+        subtitle="April 30, 2021"
+        side="left"
+        color="green"
+        icon="done_all"
+      >
+        <div>
+          APIs and UI extension.
+        </div>
+      </q-timeline-entry>
+
       <q-timeline-entry heading>September, 2020</q-timeline-entry>
 
       <q-timeline-entry
         title="MiREDiBase v1.0"
         subtitle="September 1, 2020"
         side="left"
-        color="orange"
+        color="green"
         icon="done_all"
       >
         <div>

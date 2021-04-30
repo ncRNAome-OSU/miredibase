@@ -10,14 +10,16 @@ class OrganismKind(BaseModel):
         Used to manage supported organisms.
     [description]
     """
-    organism: str = Field(..., example="human")
+    organism: Optional[str] = None
+    organism_id: Optional[int] = None
+    organism_code: Optional[str] = None
 
 class OrganismKindRNAmod(OrganismKind):
     """[summary]
         Used to manage supported organisms.
     [description]
     """
-    mod_type: str = Field(..., example="ai")
+    mod_type: Optional[str] = None
 
 class OrganismKindRNAmodChrStemloopMirna(OrganismKindRNAmod):
     """[summary]
@@ -42,7 +44,7 @@ class SearchBy(OrganismKind):
         Used to manage supported search.
     [description]
     """
-    mod_type: str
+    mod_type: Optional[str] = None
     chromosome: Optional[str] = None
     start: Optional[int] = None
     end: Optional[int] = None
@@ -125,6 +127,15 @@ class UriInfo(BaseModel):
     radar: Optional[str] = None
     ucsc: Optional[str] = None
 
+class Conservation(BaseModel):
+    """Used to manage conservation info.
+    """
+    organism_code: str
+    mod_type: str
+    chromosome: str
+    strand: str
+    genomic_position: int
+
 class RNAESBasicInfo(BaseModel):
     """[summary]
         Used to manage RNA Editing site basic info.
@@ -135,17 +146,22 @@ class RNAESBasicInfo(BaseModel):
     involved into the stem-loop.
     """
     organism: str
+    organism_id: int
+    organism_code: str
     mod_type: str
     chromosome: str
     strand: str
     genomic_position: int
+    conservation: List[Conservation]
     transcript_region: str
     stemloop: str
     stemloop_acc_number: str
+    stemloop_rnacentral_acc_number: Optional[str] = None
     stemloop_region_involved: str
     stemloop_local_pos: Optional[int] = None
     mirna: Optional[str] = None
     mirna_acc_number: Optional[str] = None
+    mirna_rnacentral_acc_number: Optional[str] = None
     mirna_local_pos: Optional[int] = None
     motif_5_to_3: Optional[str] = None
     number_high_throughput_studies: int
@@ -209,15 +225,19 @@ class RNAESPredictionInfo(BaseModel):
     involved into the stem-loop.
     """
     organism: str
+    organism_id: int
+    organism_code: str
     mod_type: str
     chromosome: str
     strand: str
     genomic_position: int
     stemloop: str
     stemloop_acc_number: str
+    stemloop_rnacentral_acc_number: Optional[str] = None
     stemloop_local_pos: int
     mirna: str
     mirna_acc_number: str
+    mirna_rnacentral_acc_number: Optional[str] = None
     mirna_local_pos: int
     mirna_seq: str
     target_prediction: PredictionInfo
@@ -289,15 +309,19 @@ class RNAESEnrichmentInfo(BaseModel):
     involved into the stem-loop.
     """
     organism: str
+    organism_id: int
+    organism_code: str
     mod_type: str
     chromosome: str
     strand: str
     genomic_position: int
     stemloop: str
     stemloop_acc_number: str
+    stemloop_rnacentral_acc_number: Optional[str] = None
     stemloop_local_pos: int
     mirna: str
     mirna_acc_number: str
+    mirna_rnacentral_acc_number: Optional[str] = None
     mirna_local_pos: int
     target_enrichment: EnrichmentInfo
 
@@ -354,6 +378,8 @@ class ComparisonBasicInfo(BaseModel):
 class ComparisonInfo(BaseModel):
     """Used to manage comparison info."""
     organism: str
+    organism_id: int
+    organism_code: str
     mod_type: str
     chromosome: str
     strand: str
@@ -361,11 +387,13 @@ class ComparisonInfo(BaseModel):
     transcript_region: str
     stemloop: str
     stemloop_acc_number: Optional[str] = None
+    stemloop_rnacentral_acc_number: Optional[str] = None
     stemloop_region_involved: Optional[str] = None
     stemloop_local_pos: Optional[int] = None
     mirna: Optional[str] = None
     mirna_seq: Optional[str] = None
     mirna_acc_number: Optional[str] = None
+    mirna_rnacentral_acc_number: Optional[str] = None
     mirna_local_pos: Optional[int] = None
     author: str
     year: int

@@ -1,4 +1,3 @@
-
 const routes = [
   {
     path: '/',
@@ -11,7 +10,12 @@ const routes = [
       { path: 'download', component: () => import('pages/Download.vue') },
       { path: 'help', component: () => import('pages/Help.vue') },
       { path: 'changelog', component: () => import('pages/ChangeLog.vue') },
-      { path: 'contactus', component: () => import('pages/ContactUs.vue') }
+      { path: 'contactus', component: () => import('pages/ContactUs.vue') },
+      {
+        path: 'variant/:vartype/:genpos/:chrom/:strand/:organism',
+        component: () => import('pages/Variant.vue'),
+        props: castRouteParams
+      }
     ]
   },
 
@@ -22,5 +26,15 @@ const routes = [
     component: () => import('pages/Error404.vue')
   }
 ]
+
+function castRouteParams (route) {
+  return {
+    vartype: route.params.vartype.replace(/[^A-Za-z0-9]/g, ''),
+    genpos: Number(route.params.genpos),
+    chrom: route.params.chrom.replace(/[^A-Za-z0-9]/g, '').toUpperCase(),
+    strand: route.params.strand.replace(/[^\-+]/g, ''),
+    organism: route.params.organism.replace(/[^A-Za-z]/g, '').toLowerCase()
+  }
+}
 
 export default routes

@@ -34,10 +34,12 @@ export default {
           'chromosome',
           'strand',
           'genomicPosition',
+          'conservation',
           'stemloop',
           'transcriptRegion',
           'stemloopRegionInvolved',
           'stemloopLocalPos',
+          'miRNA',
           'mirnaLocalPos',
           'numberHighThroughputStudies',
           'numberEnzymePerturbationStudies',
@@ -94,6 +96,13 @@ export default {
             sort: (a, b, rowA, rowB) => parseInt(a, 10) - parseInt(b, 10)
           },
           {
+            name: 'conservation',
+            label: 'Conservation',
+            field: 'conservation',
+            sortable: true,
+            align: 'center'
+          },
+          {
             name: 'stemloop',
             label: 'Name',
             field: 'stemloop',
@@ -127,6 +136,13 @@ export default {
             sortable: true,
             align: 'center',
             sort: (a, b, rowA, rowB) => parseInt(a, 10) - parseInt(b, 10)
+          },
+          {
+            name: 'miRNA',
+            label: 'Name',
+            field: 'mirna',
+            sortable: true,
+            align: 'center'
           },
           {
             name: 'mirnaLocalPos',

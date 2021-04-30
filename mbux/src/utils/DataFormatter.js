@@ -138,10 +138,14 @@ const utils = {
                 link: data.uri.ucsc
               }
               break
+            case 'conservation':
+              response[key] = data[key]
+              break
             case 'stemloop':
               response[key] = {
                 value: data[key],
-                link: `http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=${data.stemloop_acc_number}`
+                mirbaseLink: this.isNotNull(data.stemloop_acc_number) ? `http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=${data.stemloop_acc_number}` : null,
+                rnacentralLink: this.isNotNull(data.stemloop_rnacentral_acc_number) ? `https://rnacentral.org/rna/${data.stemloop_rnacentral_acc_number}/${data.organism_id}` : null
               }
               break
             case 'stemloop_local_pos':
@@ -158,7 +162,8 @@ const utils = {
               if (data[key] !== null) {
                 response[key] = {
                   value: data[key],
-                  link: `http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=${data.mirna_acc_number}`
+                  mirbaseLink: this.isNotNull(data.mirna_acc_number) ? `http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=${data.mirna_acc_number}` : null,
+                  rnacentralLink: this.isNotNull(data.mirna_rnacentral_acc_number) ? `https://rnacentral.org/rna/${data.mirna_rnacentral_acc_number}/${data.organism_id}` : null
                 }
               }
               break

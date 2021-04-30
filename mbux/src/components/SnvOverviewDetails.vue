@@ -19,13 +19,13 @@
 
       <template slot="header" slot-scope="props" :props="props" style="display: contents">
         <q-tr>
-          <q-th colspan="5" class="text-left">
+          <q-th colspan="6" class="text-left">
             <helper>
               The modification site overview. Click on the purple inscriptions to access external resources.
             </helper>
             <span class="q-pl-xs">{{ table.title }}</span>
           </q-th>
-          <q-th colspan="5" class="bg-deep-orange-9 text-white">
+          <q-th colspan="6" class="bg-deep-orange-9 text-white">
             Stem-loop information
           </q-th>
           <q-th colspan="3"></q-th>
@@ -49,23 +49,29 @@
           <q-th key="genomicPosition" :props="props" class="text-center">
             Genomic position<br>(UCSC)
           </q-th>
-          <q-th key="stemloop" :props="props" class="bg-deep-orange-5 text-white text-center">
+          <q-th key="conservation" :props="props">
+            Conservation
+          </q-th>
+          <q-th key="stemloop" :props="props" class="bg-deep-orange-4 text-white text-center">
             Stem-loop
           </q-th>
-          <q-th key="transcriptRegion" :props="props" class="bg-deep-orange-6 text-white text-center">
+          <q-th key="transcriptRegion" :props="props" class="bg-deep-orange-5 text-white text-center">
             Edited transcript<br>region&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </q-th>
-          <q-th key="stemloopRegionInvolved" :props="props" class="bg-deep-orange-7 text-white text-center">
+          <q-th key="stemloopRegionInvolved" :props="props" class="bg-deep-orange-6 text-white text-center">
             Region&nbsp;&nbsp;&nbsp;<br>involved
           </q-th>
-          <q-th key="stemloopLocalPos" :props="props" class="bg-deep-orange-8 text-white text-center">
+          <q-th key="stemloopLocalPos" :props="props" class="bg-deep-orange-7 text-white text-center">
             Local position<br>in stem-loop&nbsp;&nbsp;
           </q-th>
+          <q-th key="miRNA" :props="props" class="bg-deep-orange-8 text-white">
+            miRNA
+          </q-th>
           <q-th key="mirnaLocalPos" :props="props" class="bg-deep-orange-9 text-white text-center">
-            GLocal position<br>in miRNA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Local position<br>&nbsp;&nbsp;in miRNA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </q-th>
           <q-th key="isPutative" :props="props" class="bg-light-green-9 text-white text-center">
-            Is it putative?
+            Putative?
           </q-th>
           <q-th colspan="3" rowspan="1" class="bg-deep-purple-8 text-white text-center">
             External resources
@@ -92,21 +98,96 @@
         />
       </q-td>
 
+      <q-td slot="body-cell-conservation" slot-scope="props" :props="props">
+        <template>
+          <q-list dense>
+            <q-item
+              v-for="(item, index) in props.value"
+              :key="index"
+            >
+              <q-item-section>
+                <q-btn
+                  dense
+                  flat
+                  color="purple-7"
+                  @click="goToExternaResource(`/miredibase/variant/${item.mod_type}/${item.genomic_position}/${item.chromosome}/${item.strand}/${item.organism_code}`)"
+                >
+                  {{item.organism_code}}
+                </q-btn>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </template>
+      </q-td>
+
       <q-td slot="body-cell-stemloop" slot-scope="props" :props="props">
+        <span v-if="isNotNull(props.value.value)">
+          {{ props.value.value }}
+        </span>
+        <br>
         <q-btn
+          v-if="isNotNull(props.value.mirbaseLink)"
           no-caps
           square
           class="text-weigth-bold"
           type="a"
-          :label="props.value.value"
+          label="miRBase"
+          dense
           flat
           color="purple"
-          @click="goToExternaResource(`${props.value.link}`)"
+          @click="goToExternaResource(`${props.value.mirbaseLink}`)"
+        />
+        <br>
+        <q-btn
+          v-if="isNotNull(props.value.rnacentralLink)"
+          no-caps
+          square
+          class="text-weigth-bold"
+          type="a"
+          label="RNAcentral"
+          dense
+          flat
+          color="purple"
+          @click="goToExternaResource(`${props.value.rnacentralLink}`)"
+        />
+      </q-td>
+
+      <q-td slot="body-cell-miRNA" slot-scope="props" :props="props">
+        <span v-if="objectHasPropery(props.row, 'mirna')">
+          {{ props.value.value }}
+        </span>
+        <br>
+        <q-btn
+          v-if="objectHasPropery(props.row, 'mirna') && isNotNull(props.value.mirbaseLink)"
+          no-caps
+          square
+          class="text-weigth-bold"
+          type="a"
+          label="miRBase"
+          dense
+          flat
+          color="purple"
+          @click="goToExternaResource(`${props.value.mirbaseLink}`)"
+        />
+        <br>
+        <q-btn
+          v-if="objectHasPropery(props.row, 'mirna') && isNotNull(props.value.rnacentralLink)"
+          no-caps
+          square
+          class="text-weigth-bold"
+          type="a"
+          label="RNAcentral"
+          dense
+          flat
+          color="purple"
+          @click="goToExternaResource(`${props.value.rnacentralLink}`)"
         />
       </q-td>
 
       <q-td slot="body-cell-isPutative" slot-scope="props" :props="props">
-        <q-chip :color="setIsPutativeColor(props.value)" text-color="white">{{ isPutative(props.value) }}</q-chip>
+        <q-chip :color="setIsPutativeColor(props.value)" text-color="white">
+          {{ isPutative(props.value) }}
+        </q-chip>
       </q-td>
 
       <q-td slot="body-cell-externalResources" slot-scope="props" :props="props">
@@ -163,7 +244,6 @@
         />
       </q-td>
     </q-table>
-
   </div>
 </template>
 
@@ -190,6 +270,7 @@ export default {
         'chromosome',
         'strand',
         'genomic_position',
+        'conservation',
         'stemloop',
         'transcript_region',
         'stemloop_local_pos',
@@ -209,11 +290,12 @@ export default {
           'chromosome',
           'strand',
           'genomicPosition',
+          'conservation',
           'stemloop',
           'transcriptRegion',
           'stemloopLocalPos',
           'stemloopRegionInvolved',
-          'mirna',
+          'miRNA',
           'mirnaLocalPos',
           'isPutative',
           'externalResources'
@@ -268,6 +350,13 @@ export default {
             sort: (a, b, rowA, rowB) => parseInt(a, 10) - parseInt(b, 10)
           },
           {
+            name: 'conservation',
+            label: 'Conservation',
+            field: 'conservation',
+            sortable: true,
+            align: 'center'
+          },
+          {
             name: 'stemloop',
             label: 'Name',
             field: 'stemloop',
@@ -295,6 +384,13 @@ export default {
             sortable: false,
             align: 'center',
             sort: (a, b, rowA, rowB) => parseInt(a, 10) - parseInt(b, 10)
+          },
+          {
+            name: 'miRNA',
+            label: 'Name',
+            field: 'mirna',
+            sortable: false,
+            align: 'center'
           },
           {
             name: 'mirnaLocalPos',
@@ -360,7 +456,7 @@ export default {
 
   },
   watch: {
-    studyData: function (newVal, oldVal) { // watch it
+    studyData: function (newVal, oldVal) {
       this.initListData(newVal)
     }
   }

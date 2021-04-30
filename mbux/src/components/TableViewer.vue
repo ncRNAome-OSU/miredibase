@@ -37,8 +37,8 @@
 
       <template slot="header" slot-scope="props" :props="props" style="display: contents">
         <q-tr>
-          <q-th colspan="6"></q-th>
-          <q-th colspan="5" class="bg-deep-orange-9 text-white">
+          <q-th colspan="7"></q-th>
+          <q-th colspan="6" class="bg-deep-orange-9 text-white">
             Stem-loop information
           </q-th>
           <q-th colspan="3" class="bg-light-blue-9 text-white">
@@ -69,34 +69,40 @@
           <q-th key="genomicPosition" :props="props" class="text-center">
             Genomic&nbsp;&nbsp;&nbsp;&nbsp;<br>position&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>(UCSC)
           </q-th>
-          <q-th key="stemloop" :props="props" class="bg-deep-orange-5 text-white">
+          <q-th key="conservation" :props="props">
+            Conservation
+          </q-th>
+          <q-th key="stemloop" :props="props" class="bg-deep-orange-4 text-white">
             Stem-loop
           </q-th>
-          <q-th key="transcriptRegion" :props="props" class="bg-deep-orange-6 text-white text-center">
+          <q-th key="transcriptRegion" :props="props" class="bg-deep-orange-5 text-white text-center">
             Edited&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>transcript<br>
             &nbsp;region
           </q-th>
-          <q-th key="stemloopRegionInvolved" :props="props" class="bg-deep-orange-7 text-white text-center">
+          <q-th key="stemloopRegionInvolved" :props="props" class="bg-deep-orange-6 text-white text-center">
             Region&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>involved
           </q-th>
-          <q-th key="stemloopLocalPos" :props="props" class="bg-deep-orange-8 text-white text-center">
+          <q-th key="stemloopLocalPos" :props="props" class="bg-deep-orange-7 text-white text-center">
             Local position&nbsp;&nbsp;&nbsp;&nbsp;<br>in stem-loop
+          </q-th>
+          <q-th key="miRNA" :props="props" class="bg-deep-orange-8 text-white">
+            miRNA
           </q-th>
           <q-th key="mirnaLocalPos" :props="props" class="bg-deep-orange-9 text-white text-center">
             Local position<br>in miRNA
           </q-th>
-          <q-th key="numberHighThroughputStudies" :props="props" class="bg-light-blue-7 text-white text-center">
+          <q-th key="numberHighThroughputStudies" :props="props" class="bg-light-blue-3 text-grey-9 text-center">
             High&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
             throughput<br>&nbsp;&nbsp;&nbsp;methods
           </q-th>
-          <q-th key="numberEnzymePerturbationStudies" :props="props" class="bg-light-blue-8 text-white text-center">
+          <q-th key="numberEnzymePerturbationStudies" :props="props" class="bg-light-blue-6 text-white text-center">
             Enzyme&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>perturbation
           </q-th>
           <q-th key="numberTargetedMethodStudies" :props="props" class="bg-light-blue-9 text-white text-center">
             Targeted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>methods
           </q-th>
           <q-th key="isPutative" :props="props" class="bg-light-green-9 text-white text-center">
-            Is it putative?
+            Putative?
           </q-th>
         </q-tr>
       </template>
@@ -107,9 +113,8 @@
           size="sm"
           color="red-7"
           icon="view_headline"
-          @click="showSNVDetails(props.value)"
-        >
-        </q-btn>
+          @click="goToExternaResource(`/miredibase/variant/${props.row.mod_type}/${props.row.genomic_position}/${props.row.chromosome}/${props.row.strand}/${props.row.organism_code}`)"
+        />
       </q-td>
 
       <q-td slot="body-cell-modType" slot-scope="props" :props="props">
@@ -135,16 +140,85 @@
         />
       </q-td>
 
+      <q-td slot="body-cell-conservation" slot-scope="props" :props="props">
+        <template>
+          <q-list dense>
+            <q-item
+              v-for="(item, index) in props.value"
+              :key="index"
+            >
+              <q-item-section>
+                <q-btn
+                  dense
+                  flat
+                  color="purple-7"
+                  @click="goToExternaResource(`/miredibase/variant/${item.mod_type}/${item.genomic_position}/${item.chromosome}/${item.strand}/${item.organism_code}`)"
+                >
+                  {{item.organism_code}}
+                </q-btn>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </template>
+      </q-td>
+
       <q-td slot="body-cell-stemloop" slot-scope="props" :props="props">
+        {{ props.value }}
+        <br>
         <q-btn
+          v-if="isNotNull(props.row.stemloop_acc_number)"
           no-caps
           square
           class="text-weigth-bold"
           type="a"
-          :label="props.value"
+          label="miRBase"
+          dense
           flat
           color="purple"
           @click="goToExternaResource(`http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=${props.row.stemloop_acc_number}`)"
+        />
+        <br>
+        <q-btn
+          v-if="isNotNull(props.row.stemloop_rnacentral_acc_number)"
+          no-caps
+          square
+          class="text-weigth-bold"
+          type="a"
+          label="RNAcentral"
+          dense
+          flat
+          color="purple"
+          @click="goToExternaResource(`https://rnacentral.org/rna/${props.row.stemloop_rnacentral_acc_number}/${props.row.organism_id}`)"
+        />
+      </q-td>
+
+      <q-td slot="body-cell-miRNA" slot-scope="props" :props="props">
+        {{ props.value }}
+        <br>
+        <q-btn
+          v-if="isNotNull(props.row.mirna_acc_number)"
+          no-caps
+          square
+          class="text-weigth-bold"
+          type="a"
+          label="miRBase"
+          dense
+          flat
+          color="purple"
+          @click="goToExternaResource(`http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=${props.row.mirna_acc_number}`)"
+        />
+        <br>
+        <q-btn
+          v-if="isNotNull(props.row.mirna_rnacentral_acc_number)"
+          no-caps
+          square
+          class="text-weigth-bold"
+          type="a"
+          label="RNAcentral"
+          dense
+          flat
+          color="purple"
+          @click="goToExternaResource(`https://rnacentral.org/rna/${props.row.mirna_rnacentral_acc_number}/${props.row.organism_id}`)"
         />
       </q-td>
 
@@ -199,12 +273,16 @@ export default {
     return {
       filter: '',
       pagination: {
-        rowsPerPage: 5
+        rowsPerPage: 20
       }
     }
   },
   computed: {},
   methods: {
+
+    isNotNull (value) {
+      return this.$utils.isNotNull(value)
+    },
 
     exportTable () {
       return this.$exportDataTableAsCSV()

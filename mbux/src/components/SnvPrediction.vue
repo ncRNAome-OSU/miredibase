@@ -1,128 +1,119 @@
 <template>
   <div>
     <div v-if="isObjectNotEmpty(snvData) && isObjectNotEmpty(snvData.mirna) && snvData.prediction" class="text-weight-light">
-      <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 q-pr-xs">
-
-          <q-card>
-            <q-card-section class="text-justify">
-              Target predictions are available for the selected miRNA modification site. You can load the results
-              on-demand by clicking on the button below due to a large number of predicted targets.<br /><br />
-              <q-btn
-                no-caps
-                dense
-                class="q-px-xs"
-                color="primary"
-                icon="cloud_download"
-                label="Load prediction results"
-                @click="loadSNVData()"
-              />
-            </q-card-section>
-
-            <q-separator spaced />
-
-            <q-card-section>
-              MiRNA target predictions were provided by isoTar
-              <q-btn
-                no-caps
-                type="a"
-                size="sm"
-                dense
-                flat
-                color="purple"
-                label="Explore isoTar"
-                @click="goToExternaResource('https://ncrnaome.osumc.edu/isotar/')"
-              /><br /><br />
-
-              To generate the displayed miRNA target predictions in isoTar, `copy` the following input (min. consensus: <b>3</b>):<br />
-              <pre>
+      <q-card class="q-pr-xs">
+        <q-card-section horizontal>
+          <q-card-section class="text-justify">
+            Target predictions are available for the selected miRNA modification site. You can load the results
+            on-demand by clicking on the button below due to a large number of predicted targets.<br /><br />
+            <q-btn
+              no-caps
+              dense
+              class="q-px-xs"
+              color="primary"
+              icon="cloud_download"
+              label="Load prediction results"
+              @click="loadSNVData()"
+            />
+          </q-card-section>
+          <q-separator vertical />
+          <q-card-section style="width: 100%">
+            MiRNA target predictions were provided by isoTar (
+            <q-btn
+              no-caps
+              type="a"
+              size="md"
+              dense
+              flat
+              color="purple"
+              label="Explore isoTar"
+              @click="goToExternaResource('https://ncrnaome.osumc.edu/isotar/')"
+            />). To generate the displayed miRNA target predictions in isoTar, `copy` the following input (min. consensus: <b>3</b>):<br />
+            <pre>
 &gt;{{ snvData.mirna }} {{ snvData.stemloop }} {{ snvData.mirna_local_pos }}:A|G
 {{ snvData.mirna_seq }}</pre>
-            </q-card-section>
-          </q-card>
-          <br />
+          </q-card-section>
+        </q-card-section>
+      </q-card>
 
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 q-pr-xs">
+      <q-separator spaced />
 
-          <div v-show="isLoading" class="flex flex-center q-pt-lg">
-            <p class="text-weight-light text-h6">
-              <q-spinner-dots
-                color="primary"
-                size="2em"
-                :thickness="2"
-              />
-              Please wait, miRNA target predictions loading...
-            </p>
-          </div>
+      <div v-show="isLoading" class="flex flex-center q-pt-lg">
+        <p class="text-weight-light text-h6">
+          <q-spinner-dots
+            color="primary"
+            size="2em"
+            :thickness="2"
+          />
+          Please wait, miRNA target predictions loading...
+        </p>
+      </div>
 
-          <div class="row q-pb-md">
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 q-pr-xs">
+      <div class="row q-pb-md">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 q-pr-xs">
 
-              <predictions-subset-table-viewer
-                title="Wild-type unique targets"
-                :data="$store.state.showcase.wtUniqueTargetPredictionData"
-                :columns="table.subsetColumns"
-                first-columns-header-color="primary"
-                row-key="name"
-                :is-downloadable="isDownloadable"
-                badge-color="light-blue"
-                tooltip-text="List of putative target genes for the wild-type miRNA. Results can be ordered by RefSeq ID or Gene name. Click on the purple inscriptions to access external online resources."
-              />
-
-            </div>
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 q-pr-xs">
-
-              <predictions-subset-table-viewer
-                title="Wild-type/Edited common targets"
-                :data="$store.state.showcase.interTargetPredictionData"
-                :columns="table.subsetColumns"
-                first-columns-header-color="primary"
-                row-key="name"
-                :is-downloadable="isDownloadable"
-                badge-color="green"
-                tooltip-text="List of putative target genes shared by both miRNA versions. Results can be ordered by RefSeq ID or Gene name. Click on the purple inscriptions to access external online resources."
-              />
-
-            </div>
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 q-pr-xs">
-
-              <predictions-subset-table-viewer
-                title="Edited unique targets"
-                :data="$store.state.showcase.edUniqueTargetPredictionData"
-                :columns="table.subsetColumns"
-                first-columns-header-color="primary"
-                row-key="name"
-                :is-downloadable="isDownloadable"
-                badge-color="red"
-                tooltip-text="List of putative target genes for the edited miRNA. Results can be ordered by RefSeq ID or Gene name. Click on the purple inscriptions to access external online resources."
-              />
-
-            </div>
-          </div>
-
-          <predictions-table-viewer
-            :title="`${snvData.mirna} (wild-type) target predictions`"
-            :data="$store.state.showcase.wtTargetPredictionData"
-            :columns="table.columns"
+          <predictions-subset-table-viewer
+            title="Wild-type unique targets"
+            :data="$store.state.showcase.wtUniqueTargetPredictionData"
+            :columns="table.subsetColumns"
             first-columns-header-color="primary"
             row-key="name"
             :is-downloadable="isDownloadable"
+            badge-color="light-blue"
+            tooltip-text="List of putative target genes for the wild-type miRNA. Results can be ordered by RefSeq ID or Gene name. Click on the purple inscriptions to access external online resources."
           />
 
-          <q-space class="q-pb-xs"/>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 q-pr-xs">
 
-          <predictions-table-viewer
-            :title="`${snvData.mirna} (${prettifySnvType(snvData.mod_type)}, position ${snvData.mirna_local_pos}) target predictions`"
-            :data="$store.state.showcase.edTargetPredictionData"
-            :columns="table.columns"
+          <predictions-subset-table-viewer
+            title="Wild-type/Edited common targets"
+            :data="$store.state.showcase.interTargetPredictionData"
+            :columns="table.subsetColumns"
             first-columns-header-color="primary"
             row-key="name"
             :is-downloadable="isDownloadable"
+            badge-color="green"
+            tooltip-text="List of putative target genes shared by both miRNA versions. Results can be ordered by RefSeq ID or Gene name. Click on the purple inscriptions to access external online resources."
+          />
+
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 q-pr-xs">
+
+          <predictions-subset-table-viewer
+            title="Edited unique targets"
+            :data="$store.state.showcase.edUniqueTargetPredictionData"
+            :columns="table.subsetColumns"
+            first-columns-header-color="primary"
+            row-key="name"
+            :is-downloadable="isDownloadable"
+            badge-color="red"
+            tooltip-text="List of putative target genes for the edited miRNA. Results can be ordered by RefSeq ID or Gene name. Click on the purple inscriptions to access external online resources."
           />
 
         </div>
       </div>
+
+      <predictions-table-viewer
+        :title="`${snvData.mirna} (wild-type) target predictions`"
+        :data="$store.state.showcase.wtTargetPredictionData"
+        :columns="table.columns"
+        first-columns-header-color="primary"
+        row-key="name"
+        :is-downloadable="isDownloadable"
+      />
+
+      <q-space class="q-pb-xs"/>
+
+      <predictions-table-viewer
+        :title="`${snvData.mirna} (${prettifySnvType(snvData.mod_type)}, position ${snvData.mirna_local_pos}) target predictions`"
+        :data="$store.state.showcase.edTargetPredictionData"
+        :columns="table.columns"
+        first-columns-header-color="primary"
+        row-key="name"
+        :is-downloadable="isDownloadable"
+      />
+
     </div>
     <div v-else class="text-weight-light">
       No miRNA target predictions available for the selected RNA Editing site.

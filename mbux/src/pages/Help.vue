@@ -100,7 +100,7 @@
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig1.png"
                   style="max-width:800px"
                 />
@@ -112,19 +112,26 @@
 
               <p>
                 <span class="text-bold" id="searchForm">1.1 Search Form</span><br>
-                After the search form has showed up, select an organism and specify the editing type. Then, provide a genomic
-                region or a stem-loop/miRNA name in the apposite field of the "search form". Then, you can also optionally
-                specify a biological source. The search will be activated by clicking the “Submit” button.<br><br>
+                After the search form has shown up, you can explore RNA modifications using the basic form or the advanced one.
+                The basic form provides a simple way to query RNA modifications associated with a specific miRNA or stem-loop.
+                In the advanced form, you can filter by an organism or editing type. Then, you can provide a genomic region or
+                a stem-loop/miRNA name in the specific field of the "search form". You can also optionally specify a biological
+                source. Finally, click on the "Submit" button to show the query results.<br><br>
 
-                NOTE: The "genomic region", "stem-loop", and "miRNA" fields are mutually exclusive. Once one of these fields
-                has been filled, the others will be automatically disactivated. The "biological source" field, instead, allows
-                to filter results by biological tissues and/or cell lines. By clicking the "Reset" button, information will be
-                deleted and all fields will be re-activated.
+                NOTE: The "genomic region," "stem-loop," and "miRNA" fields are mutually exclusive. Once one of these fields has
+                been filled, the others will be automatically deactivated. Instead, the "biological source" field allows filtering
+                results by biological tissues or cell lines.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
-                  src="documentation/fig2.png"
+                  class="shadow-0"
+                  src="documentation/fig2.1.png"
+                  style="max-width:800px"
+                />
+                <br><br>
+                <q-img
+                  class="shadow-0"
+                  src="documentation/fig2.2.png"
                   style="max-width:800px"
                 />
               </center>
@@ -132,13 +139,13 @@
 
               <p>
                 Search by genomic region can include an entire chromosome or a restricted chromosome region. To retrieve editing
-                sites falling into a chromosome, just select the chromosome number in the field "Chromosome" and then click the
-                "Submit" button. To retrieve editing sites falling into more restricted genomic regions, select a chromosome and
-                then type a start and end position in the apposite fields. Finally, select the strand on the DNA (+ or -).
+                sites falling into a chromosome, select the chromosome number in the field "Chromosome" and then click the "Submit"
+                button. To retrieve editing sites falling into more restricted genomic regions, select a chromosome and then type
+                a start and end position in the specific fields. Finally, choose the strand (+ or -).
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig3.png"
                   style="max-width:800px"
                 />
@@ -146,12 +153,12 @@
               <br><br>
 
               <p>
-                NOTE: The end position must be greater than the start position. In case the end position is equal or minor than
-                the start position, an error message will appear in the search form.
+                <b>Note</b>: The end position must be greater than the start position. If the end position is equal to or minor than the
+                start position, an error message will appear in the search form.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig4.png"
                   style="max-width:800px"
                 />
@@ -160,12 +167,12 @@
 
               <p>
                 To retrieve editing events reported for individual miRNAs, click either on the "stem-loop" or "miRNA" field.
-                A drop-down menu containing the complete list of miRNAs will show up. You can just select the miRNA of interest
+                A drop-down menu containing the complete list of miRNAs will show up. You can select the miRNA of interest
                 from the drop-down menu or type a miRNA name and then select the miRNA of interest. Click on "Submit" to launch the search.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig5.png"
                   style="max-width:800px"
                 />
@@ -173,13 +180,13 @@
               <br><br>
 
               <p>
-                In case you want to limit your search to one or few biological sources, you can select one or multiple biological
-                sources from the drop-down menu contained in the "biological source" field. As a consequence, MiREDiBase will return
-                miRNA modification sites detected in the selected tissues/cell lines.
+                Suppose you want to limit your search to one or a few biological sources. In that case, you can select one or multiple biological
+                sources from the drop-down menu contained in the "biological source" field. As a consequence, MiREDiBase will return miRNA
+                modification sites detected in the selected tissues/cell lines.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig6.png"
                   style="max-width:800px"
                 />
@@ -187,14 +194,15 @@
               <br><br>
 
               <p>
-                After submitting the seach form, MiREDiBase will return a table containing the list of retrieved unique miRNA modification sites.
-                The table displays general information concerning each modification site, including the genomic position and information relative to the stem-loop.<br><br>
+                After submitting the search form, MiREDiBase will return a table containing the list of retrieved unique miRNA modification sites.
+                The table displays general information concerning each modification site, including the genomic position and information relative
+                to the stem-loop.<br><br>
 
-                By default, the table will show 5 records per page. However, it is possible to augment the number of records showed per page.
+                By default, the table will show five records per page. However, it is possible to augment the number of records established per page.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig10.png"
                   style="max-width:800px"
                 />
@@ -202,11 +210,11 @@
               <br><br>
 
               <p>
-                Information about the miRNA stem-loop are subdivided as reported in the table.
+                Information about the miRNA stem-loop is subdivided as reported in the table.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig12.png"
                   style="max-width:800px"
                 />
@@ -214,15 +222,16 @@
               <br><br>
 
               <p>
-                Results can be filtered by typing appropriate key words or numerical values in the "Search within the table" (e.g.,
-                a miRNA name, a genomic position, chromosome number, etc). Results can be downloaded as a .CSV (comma-separated data) file by clicking the "Export" button.<br><br>
+                Results can be filtered by typing appropriate keywords or numerical values in the "Search within the table" (e.g., a miRNA name, a
+                genomic position, chromosome number, etc.). Results can be downloaded as a .CSV (comma-separated data) file by clicking the "Export"
+                button.<br><br>
 
-                Clicking the red icons on the left side of the table, it will open a new table containing the list of published original papers that
+                Clicking the red icons on the left side of the table will open a new page containing the list of published original papers that
                 have detected the selected modification site.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig13.png"
                   style="max-width:800px"
                 />
@@ -230,11 +239,11 @@
               <br><br>
 
               <p>
-                Information available in the "RNA Modification site study" section.
+                The information available in the "RNA Modification site study" section.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig14.png"
                   style="max-width:800px"
                 />
@@ -242,14 +251,14 @@
               <br><br>
 
               <p>
-                Right above the "RNA Modification site studies" table, a summary bar will be displayed, summing up basic information about the selected editing site.
-                Four selecting boxes are displayed in between, allowing you to navigate across four distinct sections. The "RNA Modification site studies" table is
-                included in the "Overview" section, which is showed by default. The other three sections are dedicated to predictive information and are illustrated
-                in the next subsection (<span class="text-bold">1.2 Predictions</span>).
+                Above the "RNA Modification site studies" table, a summary bar will be displayed, summing up basic information about the selected
+                editing site. Four selecting boxes are shown in between, allowing you to navigate across four distinct sections. The "RNA Modification
+                site studies" table is included in the "Overview" section, which is showed by default. The other three areas are dedicated to predictive
+                information and are illustrated in the following subsection (<span class="text-bold">1.2 Predictions</span>).
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig15.png"
                   style="max-width:800px"
                 />
@@ -267,12 +276,12 @@
                 We assumed that the presence of enzyme perturbation experiments is not enough to state that an editing site is validated. Values in the columns
                 "high-throughput methods" and "targeted methods" represent the number of studies that identified the editing site in question by high-throughput
                 and low-throughput sequencing, respectively.<br>
-                Values in the column "enzyme perturbation" represent the number of studies that carried out enzyme perturbation experiments to increase the
-                reliability of editing site detection.
+                The "enzyme perturbation" values represent the number of studies that carried out enzyme perturbation experiments to increase the reliability
+                of editing site detection
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig15.1.png"
                   style="max-width:800px"
                 />
@@ -280,21 +289,21 @@
               <br><br>
 
               <p>
-                For each editing site, information about detection methods and enzyme perturbation experiments are shown in more details under the
+                For each editing site, information about detection methods and enzyme perturbation experiments is shown in more detail under the
                 "RNA modification site studies" section. Specifically:
               </p>
                 <ul>
-                  <li>High-throughput methods are subdivided in: NGS, miR-mmPCR-seq, and RIP-seq;</li>
-                  <li>Targeted methods are subdivided in: Sanger sequencing, SNaPshot assay, and site-specific cleavage;</li>
-                  <li>Enzyme perturbation experiments are subdivided in: enzyme knockdown (KD), enzyme knockout (KO), and differential transfection.</li>
+                  <li>High-throughput methods are subdivided in NGS, miR-mmPCR-seq, and RIP-seq;</li>
+                  <li>Targeted methods are subdivided in Sanger sequencing, SNaPshot assay, and site-specific cleavage;</li>
+                  <li>Enzyme perturbation experiments are subdivided in enzyme knockdown (KD), enzyme knockout (KO), and differential transfection.</li>
                 </ul>
               <p>
-                In addition, the "RNA modification site studies" section reports information about functional effects on miRNA biogenesis/target-binding ability
-                (see the "Functional consequences" column), as well as enzyme affinity for the editing site in question (see the "Enzyme selectivity" column).
+                The "RNA modification site studies" section shows information regarding the functional effects on miRNA biogenesis/target-binding ability
+                (see the "Functional consequences" column). In addition, it is reported the enzyme affinity for the editing site (see the "Enzyme selectivity" column).
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig15.2.png"
                   style="max-width:800px"
                 />
@@ -302,13 +311,13 @@
               <br><br>
 
               <p>
-                Clicking the red icons on the left side of the "RNA Modification site study" table, it will open the "Additional info" section containing detailed
-                information about the authors’ findings for the selected miRNA editing site. Moreover, it displays information about detection and validation methods
-                for the identification of the editing site, and validation methods for the eventual retargeting.
+                Clicking on the red icons on the left side of the "RNA Modification site study" table will open the "Additional info" section containing detailed
+                information about the authors' findings for the selected miRNA editing site. Moreover, it displays information about detection and validation methods
+                for identifying the editing site and validation methods for the eventual retargeting.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig16.png"
                   style="max-width:800px"
                 />
@@ -316,16 +325,18 @@
               <br><br>
 
               <p>
-                NOTE: in case the modification consists of a nucleotide substitution, the editing level columns report the minimum (from)
-                and the maximum (to) value of editing level for the selected editing site, according to information provided by the authors. Editing level values are
-                rounded and showed as multiples of five.<br><br>NOTE: if the "Compared with" column reports a biological source (meaning that an intra-study comparison
-                was made between adverse and normal conditions of the same tissue), you can find detailed information about the comparison in the "Compare" section
-                (<span class="text-bold">2.1 Comparing editing levels in adverse vs. normal conditions</span>&nbsp;
+                <b>Note</b>: If the modification consists of nucleotide substitution, the editing level columns report the minimum (from) and the maximum (to the) value of
+                the editing level for the selected editing site, according to information provided by the authors. Editing level values are rounded and shown as
+                multiples of five.<br><br>
+
+                <b>Note</b>: Ff the "Compared with" column reports a biological source (meaning that an intra-study comparison was made between adverse and normal conditions
+                of the same tissue), you can find detailed information about the comparison in the "Compare" section (<span class="text-bold">2.1 Comparing editing levels in
+                adverse vs. normal conditions</span>&nbsp;
                 <q-btn no-caps dense class="q-px-xs" color="primary" label="Go To" @click="goToSection('compareTab', 'compareHowTo')" />).
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig17.png"
                   style="max-width:800px"
                 />
@@ -337,18 +348,18 @@
 
               <p>
                 <span class="text-bold" id="searchPredictions">1.2 Predictions</span><br>
-                As to help users to interpret the molecular/biological function of specific miRNA modification sites, MiREDiBase provides thermodynamic of the miRNA
-                stem-loop secondary structure and functional predicions of edited miRNAs.<br><br>
+                To help users in interpreting the molecular/biological implications, MiREDiBase provides the thermodynamic of the miRNA stem-loop secondary structure and
+                functional predictions of modified miRNAs.<br><br>
 
                 <span class="text-bold" id="searchThermodynamicPrediction">1.2.1 Thermodynamic prediction</span><br>
-                Thermodynamic predictions were computed by the RNAfold tool of the ViennaRNA package, and are very simple to interpret.<br><br>
+                Thermodynamic predictions are computed via the RNAfold tool of the ViennaRNA package.<br><br>
 
-                For each editing site falling into the pre-miRNA primary sequence, a minimum free energy (MFE) secondary structure was realized for both the wild-type
-                and edited version of the miRNA transcript.
+                For each modification falling within the pre-miRNA primary sequence, minimum free energy (MFE) secondary structure is realized for both the wild-type and
+                edited version of the miRNA transcript.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig18.png"
                   style="max-width:800px"
                 />
@@ -356,12 +367,12 @@
               <br><br>
 
               <p>
-                The positional entropy for both versions of the transcripts is represented by a standardized color scale. The color legend is reported at the bottom
-                left of the MFE structure. Finally, the calculated MFE and prediction accuracy level are provided at the bottom of the "Thermodynamic prediction" panel.
+                A standardized color scale represents the positional entropy for both versions of the transcripts. The color legend is reported at the bottom left of the
+                MFE structure. Finally, the calculated MFE and prediction accuracy level are provided at the bottom of the "Thermodynamic prediction" panel.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig19.png"
                   style="max-width:800px"
                 />
@@ -371,11 +382,11 @@
               <p>
                 <span class="text-bold" id="searchIsoTarPredictions">1.2.2 isoTar predictions</span><br>
                 Single nucleotide substitutions in the primary miRNA sequence can lead to functional consequences by causing a shift in the set of miRNA targets.
-                Thus, MiREDiBase includes an entire section dedicated to miRNA-targeting predictions, performed by using our web-based containerized application isoTar.
+                Thus, MiREDiBase includes an entire section dedicated to miRNA-targeting predictions, performed using our web-based containerized application isoTar.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig20.png"
                   style="max-width:800px"
                 />
@@ -388,7 +399,7 @@
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig21.png"
                   style="max-width:800px"
                 />
@@ -400,12 +411,12 @@
 
               <p>
                 <span class="text-bold" id="searchIsoTarFunctionalPredictions">1.2.3 Functional prediction</span><br>
-                As in the case of the "isoTar predictions" section, the initial screen of the "Functional prediction" section
+                As in the "isoTar predictions" section, the initial screen of the "Functional prediction" section
                 only presents a descriptive box on the top side. Click the "Load enrichment results" to load results from our server.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig22.png"
                   style="max-width:800px"
                 />
@@ -413,15 +424,20 @@
               <br><br>
 
               <p>
-                The results in this section derive from Gene Ontology (GO) and pathway analysis performed by isoTar.<br><br>
-                The GO section is in turn composed of three subsections, namely "Biological processes", "Cellular components", and "Molecular function". You can switch the subsections
-                by clicking the respective selecting box. For each subsection, the page will display three distinct summary tables, containing (i) the unique list of predicted GO terms
-                for the wild-type miRNA, (ii) the shared list of GO terms for the two miRNA version, and (iii) the unique list of GO terms for the edited miRNA, from left to right,
-                respectively. The summary tables are exportable independently from each other.
+                The GO section is in turn composed of three subsections, namely "Biological processes," "Cellular components," and
+                "Molecular function." You can switch the subsections by clicking the respective selecting box. For each subsection,
+                the page will display three different summary tables, containing:
+
+                <ol>
+                  <li>The unique list of predicted GO terms for the wild-type miRNA;</li>
+                  <li>The shared list of GO terms for the two miRNA versions;</li>
+                  <li>The unique list of GO terms for the edited miRNA, from left to right, respectively.</li>
+                </ol>
+                The summary tables are exportable independently from each other.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig23.png"
                   style="max-width:800px"
                 />
@@ -429,12 +445,12 @@
               <br><br>
 
               <p>
-                Similarly to miRNA-target predictions, all the results included in the three summary tables are reported in two additional tables below. These provide additional
+                Similar to miRNA-target predictions, all the results included in the three summary tables are reported in two additional tables below. These provide additional
                 information, including the list of predicted miRNA targets involved in each GO term and P-values.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig24.png"
                   style="max-width:800px"
                 />
@@ -442,11 +458,11 @@
               <br><br>
 
               <p>
-                The same format is found in the "Pathway" section below.
+                The exact format is found in the "Pathway" section below.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig25.png"
                   style="max-width:800px"
                 />
@@ -460,15 +476,15 @@
 
               <p>
                 <span class="text-bold" id="compareHowTo">Comparing editing levels in adverse vs. normal conditions</span><br>
-                Certain RNA editing sites can be differentially edited in adverse vs normal condition. Hence, editing of specific RNA sites might
-                represent a biomarker of disease. For this reason, MiREDiBase is provided of a dedicated section that gives the opportunity to
-                evidence trends in editing levels of specific RNA editing sites, when comparing matched adverse vs. normal conditions.
-
-                In the "Compare" section, you can use the "Compare form" to retrieve intra-study comparisons of editing levels of specific miRNA editing sites.
+                RNA editing sites can be differentially edited in adverse vs. normal conditions. Hence, editing of specific RNA
+                sites might represent a biomarker of disease. For this reason, MiREDiBase is provided with a dedicated section
+                that allows to evidence trends in editing levels of particular RNA editing sites when comparing matched adverse
+                vs. normal conditions. In the "Compare" section, you can use the "Compare form" to retrieve intra-study
+                comparisons of editing levels of specific miRNA editing sites.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig26.png"
                   style="max-width:800px"
                 />
@@ -477,13 +493,13 @@
 
               <p>
                 <span class="text-bold" id="compareForm">2.1 Compare Form</span><br>
-                After the compare form has showed up, select an organism and specify the editing type. Then, provide either a disease or a stem-loop name.
-                The search will be activated by clicking the "Submit" button.<br><br>
-                NOTE: The "Disease" and "stem-loop" fields are mutually exclusive. Once one of these fields has been filled, the other one will be automatically disactivated.
+                After the compare form has shown up, select an organism and specify the editing type. Then, provide either a
+                disease or a stem-loop name. Finally, click on the "Submit" button to show the query results.<br><br>
+                <b>Note</b>: The "Disease" and "stem-loop" fields are mutually exclusive.
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig27.png"
                   style="max-width:800px"
                 />
@@ -491,15 +507,13 @@
               <br><br>
 
               <p>
-                If you perform the search by selecting a stem-loop, MiREDiBase will show comparisons for editing sites falling along the primary sequence of the selected
-                stem-loop. Comparisons will be made across editing sites identified in different adverse conditions.<br><br>
-                If you perform the search by selecting a disease, MiREDiBase will show comparisons for editing sites detected in the specified pathological condition -
-                assuming that editing levels were reported also for the matched normal condition in the same study. Comparisons will be made across editing sites falling
-                into different stem-loops.
+                Perform the search by selecting a disease. MiREDiBase will show comparisons for editing sites detected in the
+                specified pathological condition. Editing levels will also be reported for the matched normal condition in the
+                same study. Comparisons will be made across editing sites falling into different stem-loops.<br><br>
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig28.png"
                   style="max-width:800px"
                 />
@@ -514,7 +528,7 @@
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig29.png"
                   style="max-width:800px"
                 />
@@ -540,7 +554,7 @@
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig30.png"
                   style="max-width:800px"
                 />
@@ -558,7 +572,7 @@
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig31.png"
                   style="max-width:800px"
                 />
@@ -570,7 +584,7 @@
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig32.png"
                   style="max-width:800px"
                 />
@@ -583,7 +597,7 @@
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig33.png"
                   style="max-width:800px"
                 />
@@ -595,7 +609,7 @@
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig34.png"
                   style="max-width:800px"
                 />
@@ -607,7 +621,7 @@
               </p>
               <center>
                 <q-img
-                  class="shadow-1"
+                  class="shadow-0"
                   src="documentation/fig35.png"
                   style="max-width:800px"
                 />

@@ -36,21 +36,21 @@
       <template slot="header" slot-scope="props" :props="props" style="display: contents">
         <q-tr>
           <q-th rowspan="2" colspan="4"></q-th>
-          <q-th rowspan="2" colspan="3" class="bg-light-blue-9 text-white">
+          <q-th rowspan="2" colspan="3" class="bg-teal-10 text-white">
             Functional consequences
           </q-th>
-          <q-th colspan="9" class="bg-teal-10 text-white">
+          <q-th colspan="9" class="bg-light-blue-9 text-white">
             Detection methods
           </q-th>
         </q-tr>
         <q-tr>
-          <q-th colspan="3" class="bg-teal-4">
+          <q-th colspan="3" class="bg-light-blue-3 text-grey-9">
             High throughput
           </q-th>
-          <q-th colspan="3" class="bg-teal-7 text-white">
+          <q-th colspan="3" class="bg-light-blue-6 text-white">
             Enzyme perturbation
           </q-th>
-          <q-th colspan="3" class="bg-teal-10 text-white">
+          <q-th colspan="3" class="bg-light-blue-9 text-white">
             Targeted detection methods
           </q-th>
         </q-tr>
@@ -71,43 +71,43 @@
           <q-th key="year" :props="props">
             Year
           </q-th>
-          <q-th key="reportedEffect" :props="props" class="bg-light-blue-5 text-white text-center">
+          <q-th key="reportedEffect" :props="props" class="bg-teal-8 text-white text-center">
             Reported&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>effect(s)
           </q-th>
-          <q-th key="impairedTargeting" :props="props" class="bg-light-blue-7 text-white text-center">
+          <q-th key="impairedTargeting" :props="props" class="bg-teal-9 text-white text-center">
             Impaired&nbsp;&nbsp;&nbsp;<br>targeting&nbsp;&nbsp;<br>(gene)
           </q-th>
-          <q-th key="targetGaining" :props="props" class="bg-light-blue-9 text-white text-center">
+          <q-th key="targetGaining" :props="props" class="bg-teal-10 text-white text-center">
             Target&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>gaining&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>(gene)
           </q-th>
-          <q-th key="ngs" :props="props" class="text-left bg-teal-2">
+          <q-th key="ngs" :props="props" class="text-left bg-light-blue-1 text-grey-9">
             NGS
           </q-th>
-          <q-th key="miRmmPCRSeq" :props="props" class="text-left bg-teal-3">
+          <q-th key="miRmmPCRSeq" :props="props" class="text-left bg-light-blue-2 text-grey-9">
             miR-mmPCR-seq
           </q-th>
-          <q-th key="ripSeq" :props="props" class="text-left bg-teal-4">
+          <q-th key="ripSeq" :props="props" class="text-left bg-light-blue-3 text-grey-9">
             RIP-Seq
           </q-th>
-          <q-th key="enzymeKd" :props="props" class="text-left bg-teal-5 text-white">
+          <q-th key="enzymeKd" :props="props" class="text-left bg-light-blue-4 text-white">
             Enzyme<br>KD
           </q-th>
-          <q-th key="enzymeKo" :props="props" class="text-left bg-teal-6 text-white">
+          <q-th key="enzymeKo" :props="props" class="text-left bg-light-blue-5 text-white">
             Enzyme<br>KO
           </q-th>
-          <q-th key="differentialTransfection" :props="props" class="text-left bg-teal-7 text-white">
+          <q-th key="differentialTransfection" :props="props" class="text-left bg-light-blue-6 text-white">
             Differential<br>transfection
           </q-th>
-          <q-th key="sangerSequencing" :props="props" class="text-left bg-teal-8 text-white">
+          <q-th key="sangerSequencing" :props="props" class="text-left bg-light-blue-7 text-white">
             Sanger<br>sequencing
           </q-th>
-          <q-th key="snapshotAssay" :props="props" class="text-left bg-teal-9 text-white">
+          <q-th key="snapshotAssay" :props="props" class="text-left bg-light-blue-8 text-white">
             SNaPshot<br>assay
           </q-th>
-          <q-th key="siteSpecificCleavage" :props="props" class="text-left bg-teal-10 text-white">
+          <q-th key="siteSpecificCleavage" :props="props" class="text-left bg-light-blue-9 text-white">
             Site specific<br>cleavage
           </q-th>
-          <q-th key="enzymeSelectivity" :props="props" class="text-center">
+          <q-th key="enzymeSelectivity" :props="props" class="text-center bg-brown-9 text-white">
             Enzyme&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>selectivity
           </q-th>
         </q-tr>

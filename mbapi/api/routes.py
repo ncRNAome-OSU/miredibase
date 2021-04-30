@@ -5,18 +5,18 @@ from typing import List, Any, Optional
 import logging
 
 from .models import (
+    CompareBy,
+    ComparisonInfo,
     OrganismKind,
     OrganismKindRNAmod,
     OrganismKindRNAmodChrStemloopMirna,
-    SearchBy,
-    SearchByRNAES,
     RNAfold,
     RNAESBasicInfo,
     RNAESFullInfo,
     RNAESPredictionInfo,
     RNAESEnrichmentInfo,
-    CompareBy,
-    ComparisonInfo,
+    SearchBy,
+    SearchByRNAES,
     StudiesInfo
 )
 
@@ -86,6 +86,36 @@ async def get_welcome():
     """
     return {"description": "Welcome!"}
 
+@mb_router.get(
+    "/mirnas/",
+    response_model=List[str],
+    summary="Get miRNAs list"
+)
+async def get_mirnas():
+    """
+    Endpoint to retrieve the miRNAs list.
+    """
+    cursor = await DB.editing_sites.distinct(
+        "mirna",
+        { "mirna" : { "$ne" : None } }
+    )
+    return list(map(str, cursor))
+
+@mb_router.get(
+    "/premirnas/",
+    response_model=List[str],
+    summary="Get stemloops list"
+)
+async def get_premirnas():
+    """
+    Endpoint to retrieve the pre-miRNAs list.
+    """
+    cursor = await DB.editing_sites.distinct(
+        "stemloop",
+        { "stemloop" : { "$ne" : None } }
+    )
+    return list(map(str, cursor))
+
 @mb_router.post(
     "/organisms/rnaenditingtypes/",
     response_model=List[str],
@@ -110,12 +140,15 @@ async def get_chromosomes(item: OrganismKindRNAmod):
     """
     Endpoint to retrieve the organisms's chromosomes.
     """
+    query = {
+        "organism": item.organism
+    }
+    if item.mod_type:
+        query["mod_type"] = item.mod_type
+
     cursor = await DB.editing_sites.distinct(
         "chromosome", 
-        {
-            "organism": item.organism,
-            "mod_type": item.mod_type
-        }
+        query
     )
     return sorted(
         [v for v in list(map(str, cursor)) if v.isdigit()], 
@@ -127,17 +160,20 @@ async def get_chromosomes(item: OrganismKindRNAmod):
     response_model=List[str],
     summary="Get the organism's miRNAs list"
 )
-async def get_mirnas(item: OrganismKindRNAmod):
+async def get_organism_mirnas(item: OrganismKindRNAmod):
     """
     Endpoint to retrieve the organisms's miRNAs.
     """
+    query = {
+        "organism": item.organism,
+        "mirna": { "$exists": True, "$ne": None }
+    }
+    if item.mod_type:
+        query["mod_type"] = item.mod_type
+
     cursor = await DB.editing_sites.distinct(
         "mirna", 
-        {
-            "organism": item.organism,
-            "mod_type": item.mod_type,
-            "mirna": { "$exists": True, "$ne": None }
-        }
+        query
     )
     return list(map(str, cursor))
 
@@ -146,17 +182,20 @@ async def get_mirnas(item: OrganismKindRNAmod):
     response_model=List[str],
     summary="Get the organism's pre-miRNAs (stem-loop) list"
 )
-async def get_premirnas(item: OrganismKindRNAmod):
+async def get_organism_premirnas(item: OrganismKindRNAmod):
     """
     Endpoint to retrieve the organisms's pre-miRNAs.
     """
+    query = {
+        "organism": item.organism,
+        "stemloop": { "$exists": True, "$ne": None }
+    }
+    if item.mod_type:
+        query["mod_type"] = item.mod_type
+
     cursor = await DB.editing_sites.distinct(
         "stemloop", 
-        {
-            "organism": item.organism,
-            "mod_type": item.mod_type,
-            "stemloop": { "$exists": True, "$ne": None }
-        }
+        query
     )
     return list(map(str, cursor))
 
@@ -171,10 +210,11 @@ async def get_biological_sources(item: OrganismKindRNAmodChrStemloopMirna):
     """
     query = {
         "organism": item.organism,
-        "mod_type": item.mod_type,
         "biological_source": { "$exists": True, "$ne": None }
     }
 
+    if item.mod_type:
+        query["mod_type"] = item.mod_type
     if item.chromosome:
         query["chromosome"] = item.chromosome
     if item.stemloop:
@@ -249,7 +289,7 @@ async def get_editing_site_detail(item: SearchByRNAES):
     position.
     """
     query = {
-        "organism": item.organism,
+        "organism_code": item.organism,
         "mod_type": item.mod_type,
         "chromosome": item.chromosome,
         "strand": item.strand,
@@ -271,17 +311,23 @@ async def get_editing_site_detail(item: SearchByRNAES):
                         "pubmed_id": "$studies.pubmed_id"
                     },
                     "organism": { "$first": "$organism" },
+                    "organism_id": { "$first": "$organism_id" },
+                    "organism_code": { "$first": "$organism_code" },
                     "mod_type": { "$first": "$mod_type" },
                     "chromosome": { "$first": "$chromosome" },
                     "strand": { "$first": "$strand" },
                     "genomic_position": { "$first": "$genomic_position" },
+                    "conservation": { "$first": "$genomic_position" },
                     "transcript_region": { "$first": "$transcript_region" },
                     "stemloop": { "$first": "$stemloop" },
                     "stemloop_region_involved": { "$first": "$stemloop_region_involved" },
                     "stemloop_local_pos": { "$first": "$stemloop_local_pos" },
                     "stemloop_acc_number": { "$first": "$stemloop_acc_number" },
+                    "stemloop_rnacentral_acc_number": { "$first": "$stemloop_rnacentral_acc_number" },
                     "mirna": { "$first": "$mirna" },
+                    "mirna_seq": { "$first": "$mirna_seq" },
                     "mirna_acc_number": { "$first": "$mirna_acc_number" },
+                    "mirna_rnacentral_acc_number": { "$first": "$mirna_rnacentral_acc_number" },
                     "mirna_local_pos": { "$first": "$mirna_local_pos" },
                     "rnafold_stemloop": { "$first": "$rnafold_stemloop" },
                     "number_high_throughput_studies": { "$first": "$number_high_throughput_studies" },
@@ -299,17 +345,23 @@ async def get_editing_site_detail(item: SearchByRNAES):
             {
                 "$project": {
                     "organism": 1,
+                    "organism_id": 1,
+                    "organism_code": 1,
                     "mod_type": 1,
                     "chromosome": 1,
                     "strand": 1,
                     "genomic_position": 1,
+                    "conservation": 1,
                     "transcript_region": 1,
                     "stemloop": 1,
                     "stemloop_region_involved": 1,
                     "stemloop_local_pos": 1,
                     "stemloop_acc_number": 1,
+                    "stemloop_rnacentral_acc_number": 1,
                     "mirna": 1,
+                    "mirna_seq": 1,
                     "mirna_acc_number": 1,
+                    "mirna_rnacentral_acc_number": 1,
                     "mirna_local_pos": 1,
                     "rnafold_stemloop": 1,
                     "number_high_throughput_studies": 1,
@@ -336,17 +388,23 @@ async def get_editing_site_detail(item: SearchByRNAES):
                         "genomic_position": "$genomic_position"
                     },
                     "organism": { "$first": "$organism" },
+                    "organism_id": { "$first": "$organism_id" },
+                    "organism_code": { "$first": "$organism_code" },
                     "mod_type": { "$first": "$mod_type" },
                     "chromosome": { "$first": "$chromosome" },
                     "strand": { "$first": "$strand" },
                     "genomic_position": { "$first": "$genomic_position" },
+                    "conservation": { "$first": "$genomic_position" },
                     "transcript_region": { "$first": "$transcript_region" },
                     "stemloop": { "$first": "$stemloop" },
                     "stemloop_region_involved": { "$first": "$stemloop_region_involved" },
                     "stemloop_local_pos": { "$first": "$stemloop_local_pos" },
                     "stemloop_acc_number": { "$first": "$stemloop_acc_number" },
+                    "stemloop_rnacentral_acc_number": { "$first": "$stemloop_rnacentral_acc_number" },
                     "mirna": { "$first": "$mirna" },
+                    "mirna_seq": { "$first": "$mirna_seq" },
                     "mirna_acc_number": { "$first": "$mirna_acc_number" },
+                    "mirna_rnacentral_acc_number": { "$first": "$mirna_rnacentral_acc_number" },
                     "mirna_local_pos": { "$first": "$mirna_local_pos" },
                     "rnafold_stemloop": { "$first": "$rnafold_stemloop" },
                     "number_high_throughput_studies": { "$first": "$number_high_throughput_studies" },
@@ -364,18 +422,24 @@ async def get_editing_site_detail(item: SearchByRNAES):
             {
                 "$project": {
                     "organism": 1,
+                    "organism_id": 1,
+                    "organism_code": 1,
                     "mod_type": 1,
                     "chromosome": 1,
                     "strand": 1,
                     "genomic_position": 1,
+                    "conservation": 1,
                     "transcript_region": 1,
                     "stemloop": 1,
                     "stemloop_region_involved": 1,
                     "stemloop_local_pos": 1,
                     "stemloop_acc_number": 1,
+                    "stemloop_rnacentral_acc_number": 1,
                     "mirna": 1,
                     "mirna_acc_number": 1,
+                    "mirna_rnacentral_acc_number": 1,
                     "mirna_local_pos": 1,
+                    "mirna_seq": 1,
                     "rnafold_stemloop": 1,
                     "number_high_throughput_studies": 1,
                     "number_enzyme_perturbation_studies": 1,
@@ -398,17 +462,22 @@ async def get_editing_site_detail(item: SearchByRNAES):
             query, 
             {
                 "organism": 1,
+                "organism_id": 1,
+                "organism_code": 1,
                 "mod_type": 1,
                 "chromosome": 1, 
                 "strand": 1, 
                 "genomic_position": 1,
+                "conservation": 1,
                 "transcript_region": 1,
                 "stemloop": 1,
                 "stemloop_acc_number": 1,
+                "stemloop_rnacentral_acc_number": 1,
                 "stemloop_region_involved": 1,
                 "stemloop_local_pos" : 61,
                 "mirna" : 1,
                 "mirna_acc_number": 1,
+                "mirna_rnacentral_acc_number": 1,
                 "mirna_local_pos": 1,
                 "mirna_seq": 1,
                 "motif_5_to_3": 1,
@@ -449,6 +518,8 @@ async def get_editing_site_target_predictions(item: SearchByRNAES):
         query, 
         {
             "organism": 1,
+            "organism_id": 1,
+            "organism_code": 1,
             "mod_type": 1,
             "chromosome": 1, 
             "strand": 1, 
@@ -490,6 +561,8 @@ async def get_editing_site_target_enrichment(item: SearchByRNAES):
         query, 
         {
             "organism": 1,
+            "organism_id": 1,
+            "organism_code": 1,
             "mod_type": 1,
             "chromosome": 1, 
             "strand": 1, 
@@ -521,22 +594,21 @@ async def get_editing_sites(item: SearchBy):
     """
     chrom_range = validate_chromosome_range(item.start, item.end)
 
-    query = {
-        "organism": item.organism,
-        "mod_type": item.mod_type
-    }
+    query = {}
+    if item.organism:
+        query["organism"] = item.organism
+    if item.mod_type:
+        query["mod_type"] = item.mod_type
     if item.chromosome:
         query["chromosome"] = item.chromosome
         if chrom_range:
             query["genomic_position"] = chrom_range
         if item.strand:
             query["strand"] = item.strand
-        
     if item.stemloop:
        query["stemloop"] = item.stemloop
     if item.mirna:
        query["mirna"] = item.mirna
-
     if item.biological_source:
         query["studies.physiological_pathological_condition.biological_source"] = { "$in": item.biological_source.split(';') }
 
@@ -544,15 +616,19 @@ async def get_editing_sites(item: SearchBy):
         query, 
         {
             "organism": 1,
+            "organism_id": 1,
+            "organism_code": 1,
             "mod_type": 1,
             "chromosome": 1, 
             "strand": 1, 
             "genomic_position": 1,
+            "conservation": 1,
             "transcript_region": 1,
             "stemloop": 1,
             "stemloop_region_involved": 1,
             "stemloop_local_pos": 1,
-            "stemloop_acc_number": 1, 
+            "stemloop_acc_number": 1,
+            "stemloop_rnacentral_acc_number": 1, 
             "mirna": 1,
             "mirna_acc_number": 1,
             "mirna_local_pos": 1,
@@ -679,21 +755,26 @@ async def get_editing_site_comparison(item: CompareBy):
         query, 
         {
             "organism": 1,
+            "organism_id": 1,
+            "organism_code": 1,
             "mod_type": 1,
             "chromosome": 1,
             "strand": 1,
             "genomic_position": 1,
+            "conservation": 1,
             "author": 1, 
             "year": 1, 
             "pubmed_id": 1,
             "transcript_region": 1,
             "stemloop": 1,
             "stemloop_acc_number": 1,
+            "stemloop_rnacentral_acc_number": 1,
             "stemloop_region_involved": 1,
             "stemloop_local_pos" : 1,
             "mirna" : 1,
             "mirna_seq": 1,
             "mirna_acc_number": 1,
+            "mirna_rnacentral_acc_number": 1,
             "mirna_local_pos": 1,
             "physiological_pathological_condition": 1,
             "_id": 0

@@ -50,8 +50,8 @@
 
             <q-card flat bordered>
               <q-card-section horizontal>
-                <q-card-section class="flex flex-center text-weight-light text-center bg-grey-2">
-                  <q-chip outline square color="green" label="Step 1" class="text-bold" />
+                <q-card-section class="flex flex-center text-weight-light text-center bg-green">
+                  <q-chip outline square color="white" label="Step 1" class="text-bold" />
                 </q-card-section>
                 <q-separator vertical />
                 <q-card-section style="width: 100%">
@@ -85,8 +85,8 @@
 
             <q-card flat bordered>
               <q-card-section horizontal>
-                <q-card-section class="flex flex-center text-weight-light text-center bg-grey-2">
-                  <q-chip outline square color="deep-orange" label="Step 2" class="text-bold" />
+                <q-card-section class="flex flex-center text-weight-light text-center bg-deep-orange">
+                  <q-chip outline square color="white" label="Step 2" class="text-bold" />
                 </q-card-section>
                 <q-separator vertical />
                 <q-card-section style="width: 100%">

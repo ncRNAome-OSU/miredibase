@@ -1,7 +1,9 @@
 <template>
   <div>
     <span class="text-h5 text-weight-light">Search</span>
+
     <q-separator spaced />
+
     <q-btn
       flat
       dense
@@ -10,6 +12,7 @@
       color="primary"
       @click="openDialogSearchForm"
     />
+
     <span class="text-weight-light text-justify"> to show the proper <i>Search Form</i>.</span>
 
     <q-dialog v-model="dialog" position="top" persistent>
@@ -30,241 +33,344 @@
 
         <q-card-section>
           <p class="text-weight-light text-justify">
-            Here you can search for information on RNA modification sites by: (i) selecting a chromosome; (ii)
-            a stem-loop; (iii) or a miRNA. Finally, results can be filtered by biological source(s).
-            The chromosome, stem-loop, and miRNA fields are mutually exclusive.
+            Here you can explore available RNA modification sites by: simple specify
+            a miRNA (<i>basic</i> search) or via the <i>advanced</i> search, in which
+            you can seach by chromosome, a stem-loop, or a miRNA. Finally, results can
+            be filtered by biological source(s). The chromosome, stem-loop, and miRNA
+            fields are mutually exclusive.
           </p>
 
+          <q-card>
+            <q-tabs
+              v-model="tab"
+              dense
+              class="bg-grey-8 text-white"
+              active-color="white"
+              indicator-color="red"
+              align="justify"
+            >
+              <q-tab name="bssearch" label="Basic" />
+              <q-tab name="advsearch" label="Advanced" />
+            </q-tabs>
+
+            <q-tab-panels v-model="tab" animated>
+              <q-tab-panel name="bssearch">
+                <q-form
+                  @submit.prevent.stop="onSubmit"
+                  class="q-gutter-md"
+                  id="basicSearchForm"
+                >
+                  <q-card>
+                    <q-card-section horizontal>
+                      <q-card-section style="width: 100%">
+                        <q-select
+                          clearable
+                          use-input
+                          input-debounce="0"
+                          v-model="filter.basicmirna"
+                          label="miRNA"
+                          :options="formField.basicmirna"
+                          hint="** Required **"
+                          name="basicMirnaSearchField"
+                          id="basicMirnaSearchField"
+                          @filter="filterBasicMirnas"
+                        >
+                          <template v-slot:no-option>
+                            <q-item>
+                              <q-item-section class="text-grey">
+                                No results
+                              </q-item-section>
+                            </q-item>
+                          </template>
+                        </q-select>
+                      </q-card-section>
+                      <q-separator vertical />
+                      <q-card-section class="flex flex-center">
+                        <q-btn label="Submit" type="submit" color="primary"/>
+                      </q-card-section>
+                    </q-card-section>
+                  </q-card>
+
+                </q-form>
+                <br>
+                <q-form
+                  @submit.prevent.stop="onSubmit"
+                  class="q-gutter-md"
+                  id="basicSearchForm2"
+                >
+                  <q-card>
+                    <q-card-section horizontal>
+                      <q-card-section style="width: 100%">
+                        <q-select
+                          clearable
+                          use-input
+                          input-debounce="0"
+                          v-model="filter.basicpremirna"
+                          label="Stem-loop"
+                          :options="formField.basicpremirna"
+                          hint="** Required **"
+                          name="basicPremirnaSearchField"
+                          id="basicPremirnaSearchField"
+                          @filter="filterBasicPremirnas"
+                        >
+                          <template v-slot:no-option>
+                            <q-item>
+                              <q-item-section class="text-grey">
+                                No results
+                              </q-item-section>
+                            </q-item>
+                          </template>
+                        </q-select>
+                      </q-card-section>
+                      <q-separator vertical />
+                      <q-card-section class="flex flex-center">
+                        <q-btn label="Submit" type="submit" color="primary"/>
+                      </q-card-section>
+                    </q-card-section>
+                  </q-card>
+
+                </q-form>
+              </q-tab-panel>
+
+              <q-tab-panel name="advsearch">
+                <span class="text-weight-light text-justify">Load one of the following examples: </span>
+                <q-btn label="Example 1" color="primary" class="q-ml-sm" flat dense v-on:click="loadExample(1)" />
+                <q-btn label="Example 2" color="primary" class="q-ml-sm" flat dense v-on:click="loadExample(2)" />
+                <q-separator />
+                <br>
+
+                <q-form
+                  @submit.prevent.stop="onSubmit"
+                  @reset="onReset"
+                  class="q-gutter-md"
+                  id="advancedSearchForm"
+                >
+
+                  <q-card>
+                    <q-card-section horizontal>
+                      <q-card-section class="flex flex-center text-weight-light text-center bg-green">
+                        <q-chip outline square color="white" label="Step 1" class="text-bold" />
+                      </q-card-section>
+                      <q-separator vertical />
+                      <q-card-section style="width: 100%">
+                        <div class="row q-gutter-md">
+                          <div class="col">
+                            <q-select
+                              v-model="filter.organism"
+                              label="Organism"
+                              :options="formField.organism"
+                              hint="** Required **"
+                              @input="loadOrganismData($event)"
+                              name="organismSearchField"
+                              id="organismSearchField"
+                            />
+                          </div>
+                          <div class="col">
+                            <q-select
+                              v-model="filter.rnaModification"
+                              label="RNA Modification type"
+                              hint="** Optional **"
+                              @input="loadOrganismRNAModificationData($event)"
+                              :options="formField.rnaModification"
+                              name="rnaModificationSearchField"
+                              id="rnaModificationSearchField"
+                            />
+                          </div>
+                        </div>
+                      </q-card-section>
+                    </q-card-section>
+                  </q-card>
+
+                  <q-card>
+                    <q-card-section horizontal>
+                      <q-card-section class="flex flex-center text-weight-light text-center bg-deep-orange">
+                        <q-chip outline square color="white" label="Step 2" class="text-bold" />
+                      </q-card-section>
+                      <q-separator vertical />
+                      <q-card-section style="width: 100%">
+                        <span class="text-weight-light text-grey-7">
+                          NOTE: Fields Chromosome, Stem-loop, and miRNA are mutually exclusive.
+                        </span>
+                        <div class="row q-gutter-md">
+                          <div class="col">
+                            <q-select
+                              clearable
+                              use-input
+                              input-debounce="0"
+                              v-model="filter.chromosome.chromosome"
+                              label="Chromosome"
+                              hint="** Optional **"
+                              :options="formField.chromosome"
+                              @input="onSearchFieldUpdate($event, 'chromosome')"
+                              name="chromsomeSearchField"
+                              id="chromsomeSearchField"
+                              :disable="fieldStatus.chromosome.chromosome"
+                              @filter="filterChromosomas"
+                            >
+                              <template v-slot:no-option>
+                                <q-item>
+                                  <q-item-section class="text-grey">
+                                    No results
+                                  </q-item-section>
+                                </q-item>
+                              </template>
+                            </q-select>
+                          </div>
+                          <div class="col">
+                            <q-input
+                              clearable
+                              type="number"
+                              v-model.number="filter.chromosome.start"
+                              label="Start position"
+                              hint="** Optional **"
+                              min=0
+                              name="chromosomeStartSearchField"
+                              id="chromosomeStartSearchField"
+                              :disable="fieldStatus.chromosome.start"
+                              :error="!isRangeValid"
+                            >
+                              <template v-slot:error>
+                                The <i>Start</i> must be lower then <i>End</i>.
+                              </template>
+                            </q-input>
+                          </div>
+                          <div class="col">
+                            <q-input
+                              clearable
+                              type="number"
+                              v-model.number="filter.chromosome.end"
+                              label="End position"
+                              hint="** Optional **"
+                              min="0"
+                              name="chromosomeEndSearchField"
+                              id="chromosomeEndSearchField"
+                              :disable="fieldStatus.chromosome.end"
+                              :error="!isRangeValid"
+                            >
+                              <template v-slot:error>
+                                The <i>End</i> must be higher then <i>Start</i>.
+                              </template>
+                            </q-input>
+                          </div>
+                          <div class="col">
+                            <q-select
+                              clearable
+                              v-model="filter.chromosome.strand"
+                              label="Strand"
+                              hint="** Optional **"
+                              :options="formField.strand"
+                              menu-anchor="top left"
+                              name="strandSearchField"
+                              id="strandSearchField"
+                              :disable="fieldStatus.chromosome.strand"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="row q-gutter-md">
+                          <div class="col">
+                            <q-select
+                              clearable
+                              use-input
+                              input-debounce="0"
+                              v-model="filter.premirna"
+                              label="Stem-loop"
+                              hint="** Optional **"
+                              :options="formField.premirna"
+                              @input="onSearchFieldUpdate($event, 'premirna')"
+                              name="premirnaSearchField"
+                              id="premirnaSearchField"
+                              :disable="fieldStatus.premirna"
+                              @filter="filterPremirnas"
+                            >
+                              <template v-slot:no-option>
+                                <q-item>
+                                  <q-item-section class="text-grey">
+                                    No results
+                                  </q-item-section>
+                                </q-item>
+                              </template>
+                            </q-select>
+                          </div>
+                          <div class="col">
+                            <q-select
+                              clearable
+                              use-input
+                              input-debounce="0"
+                              v-model="filter.mirna"
+                              label="miRNA"
+                              hint="** Optional **"
+                              :options="formField.mirna"
+                              @input="onSearchFieldUpdate($event, 'mirna')"
+                              name="mirnaSearchField"
+                              id="mirnaSearchField"
+                              :disable="fieldStatus.mirna"
+                              @filter="filterMirnas"
+                            >
+                              <template v-slot:no-option>
+                                <q-item>
+                                  <q-item-section class="text-grey">
+                                    No results
+                                  </q-item-section>
+                                </q-item>
+                              </template>
+                            </q-select>
+                          </div>
+                        </div>
+                      </q-card-section>
+                    </q-card-section>
+                  </q-card>
+
+                  <q-card>
+                    <q-card-section horizontal>
+                      <q-card-section class="flex flex-center text-weight-light text-center bg-purple">
+                        <q-chip outline square color="white" label="Step 3" class="text-bold" />
+                      </q-card-section>
+                      <q-separator vertical />
+                      <q-card-section style="width: 100%">
+                        <div class="row q-gutter-md">
+                          <div class="col">
+                            <q-select
+                              ref="qselectbiologicalsource"
+                              multiple
+                              clearable
+                              use-input
+                              input-debounce="0"
+                              v-model="filter.biologicalSource"
+                              label="Biological source"
+                              hint="** Optional **"
+                              :options="formField.biologicalSource"
+                              name="biologicalSourceSearchField"
+                              id="biologicalSourceSearchField"
+                              :disable="fieldStatus.biologicalSource"
+                              @filter="filterBiologicalSource"
+                              @input="clearFilter"
+                            >
+                              <template v-slot:no-option>
+                                <q-item>
+                                  <q-item-section class="text-grey">
+                                    No results
+                                  </q-item-section>
+                                </q-item>
+                              </template>
+                            </q-select>
+                          </div>
+                        </div>
+                      </q-card-section>
+                    </q-card-section>
+                  </q-card>
+
+                  <div>
+                    <q-btn label="Submit" type="submit" color="primary"/>
+                    <q-btn label="Reset" type="reset" color="grey-6" class="q-ml-xs q-px-xs" />
+                  </div>
+                </q-form>
+              </q-tab-panel>
+
+            </q-tab-panels>
+          </q-card>
+
           <q-separator />
-          <span class="text-weight-light text-justify">Load one of the following examples: </span>
-          <q-btn label="Example 1" color="primary" class="q-ml-sm" flat dense v-on:click="loadExample(1)" />
-          <q-btn label="Example 2" color="primary" class="q-ml-sm" flat dense v-on:click="loadExample(2)" />
-          <q-separator />
-          <br>
-
-          <q-form
-            @submit.prevent.stop="onSubmit"
-            @reset="onReset"
-            class="q-gutter-md"
-          >
-
-            <q-card flat bordered>
-              <q-card-section horizontal>
-                <q-card-section class="flex flex-center text-weight-light text-center bg-grey-2">
-                  <q-chip outline square color="green" label="Step 1" class="text-bold" />
-                </q-card-section>
-                <q-separator vertical />
-                <q-card-section style="width: 100%">
-                  <div class="row q-gutter-md">
-                    <div class="col">
-                      <q-select
-                        v-model="filter.organism"
-                        label="Organism"
-                        :options="formField.organism"
-                        hint="(Select an Organism)"
-                        @input="loadOrganismData($event)"
-                        name="organismSearchField"
-                        id="organismSearchField"
-                      />
-                    </div>
-                    <div class="col">
-                      <q-select
-                        v-model="filter.rnaModification"
-                        label="RNA Editing type"
-                        :options="formField.rnaModification"
-                        hint="(Select an Editing Type)"
-                        @input="loadOrganismRNAModificationData($event)"
-                        name="rnaModificationSearchField"
-                        id="rnaModificationSearchField"
-                      />
-                    </div>
-                  </div>
-                </q-card-section>
-              </q-card-section>
-            </q-card>
-
-            <q-card flat bordered>
-              <q-card-section horizontal>
-                <q-card-section class="flex flex-center text-weight-light text-center bg-grey-2">
-                  <q-chip outline square color="deep-orange" label="Step 2" class="text-bold" />
-                </q-card-section>
-                <q-separator vertical />
-                <q-card-section style="width: 100%">
-                  <span class="text-weight-light text-grey-7">NOTE: Fields Chromosome, Stem-loop, and miRNA are mutually exclusive.</span>
-                  <div class="row q-gutter-md">
-                    <div class="col">
-                      <q-select
-                        clearable
-                        use-input
-                        input-debounce="0"
-                        v-model="filter.chromosome.chromosome"
-                        label="Chromosome"
-                        :options="formField.chromosome"
-                        hint="(Select a Chromosome)"
-                        @input="onSearchFieldUpdate($event, 'chromosome')"
-                        name="chromsomeSearchField"
-                        id="chromsomeSearchField"
-                        :disable="fieldStatus.chromosome.chromosome"
-                        @filter="filterChromosomas"
-                      >
-                        <template v-slot:no-option>
-                          <q-item>
-                            <q-item-section class="text-grey">
-                              No results
-                            </q-item-section>
-                          </q-item>
-                        </template>
-                      </q-select>
-                    </div>
-                    <div class="col">
-                      <q-input
-                        clearable
-                        type="number"
-                        v-model.number="filter.chromosome.start"
-                        label="Start"
-                        min=0
-                        hint="(Insert the starting position)"
-                        name="chromosomeStartSearchField"
-                        id="chromosomeStartSearchField"
-                        :disable="fieldStatus.chromosome.start"
-                        :error="!isRangeValid"
-                      >
-                        <template v-slot:error>
-                          The <i>Start</i> must be lower then <i>End</i>.
-                        </template>
-                      </q-input>
-                    </div>
-                    <div class="col">
-                      <q-input
-                        clearable
-                        type="number"
-                        v-model.number="filter.chromosome.end"
-                        label="End"
-                        min="0"
-                        hint="(Insert the ending position)"
-                        name="chromosomeEndSearchField"
-                        id="chromosomeEndSearchField"
-                        :disable="fieldStatus.chromosome.end"
-                        :error="!isRangeValid"
-                      >
-                        <template v-slot:error>
-                          The <i>End</i> must be higher then <i>Start</i>.
-                        </template>
-                      </q-input>
-                    </div>
-                    <div class="col">
-                      <q-select
-                        clearable
-                        v-model="filter.chromosome.strand"
-                        label="Strand"
-                        :options="formField.strand"
-                        hint="(Select a strand)"
-                        menu-anchor="top left"
-                        name="strandSearchField"
-                        id="strandSearchField"
-                        :disable="fieldStatus.chromosome.strand"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="row q-gutter-md">
-                    <div class="col">
-                      <q-select
-                        clearable
-                        use-input
-                        input-debounce="0"
-                        v-model="filter.premirna"
-                        label="Stem-loop"
-                        :options="formField.premirna"
-                        hint="(Select a stem-loop)"
-                        @input="onSearchFieldUpdate($event, 'premirna')"
-                        name="premirnaSearchField"
-                        id="premirnaSearchField"
-                        :disable="fieldStatus.premirna"
-                        @filter="filterPremirnas"
-                      >
-                        <template v-slot:no-option>
-                          <q-item>
-                            <q-item-section class="text-grey">
-                              No results
-                            </q-item-section>
-                          </q-item>
-                        </template>
-                      </q-select>
-                    </div>
-                    <div class="col">
-                      <q-select
-                        clearable
-                        use-input
-                        input-debounce="0"
-                        v-model="filter.mirna"
-                        label="miRNA"
-                        :options="formField.mirna"
-                        hint="(Select a mature miRNA)"
-                        @input="onSearchFieldUpdate($event, 'mirna')"
-                        name="mirnaSearchField"
-                        id="mirnaSearchField"
-                        :disable="fieldStatus.mirna"
-                        @filter="filterMirnas"
-                      >
-                        <template v-slot:no-option>
-                          <q-item>
-                            <q-item-section class="text-grey">
-                              No results
-                            </q-item-section>
-                          </q-item>
-                        </template>
-                      </q-select>
-                    </div>
-                  </div>
-                </q-card-section>
-              </q-card-section>
-            </q-card>
-
-            <q-card flat bordered>
-              <q-card-section horizontal>
-                <q-card-section class="flex flex-center text-weight-light text-center bg-grey-2">
-                  <q-chip outline square color="purple" label="Step 3" class="text-bold" />
-                </q-card-section>
-                <q-separator vertical />
-                <q-card-section style="width: 100%">
-                  <div class="row q-gutter-md">
-                    <div class="col">
-                      <q-select
-                        ref="qselectbiologicalsource"
-                        multiple
-                        clearable
-                        use-input
-                        input-debounce="0"
-                        v-model="filter.biologicalSource"
-                        label="Biological source"
-                        :options="formField.biologicalSource"
-                        hint="(Optionally, filter results by biological source(s))"
-                        name="biologicalSourceSearchField"
-                        id="biologicalSourceSearchField"
-                        :disable="fieldStatus.biologicalSource"
-                        @filter="filterBiologicalSource"
-                        @input="clearFilter"
-                      >
-                        <template v-slot:no-option>
-                          <q-item>
-                            <q-item-section class="text-grey">
-                              No results
-                            </q-item-section>
-                          </q-item>
-                        </template>
-                      </q-select>
-                    </div>
-                  </div>
-                </q-card-section>
-              </q-card-section>
-            </q-card>
-
-            <div>
-              <q-btn label="Submit" type="submit" color="primary"/>
-              <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
-            </div>
-          </q-form>
 
         </q-card-section>
       </q-card>
@@ -283,6 +389,7 @@ export default {
   },
   data () {
     return {
+      tab: 'bssearch',
       dialog: true,
       position: 'top',
       formField: {
@@ -293,14 +400,18 @@ export default {
           { label: '+', value: '+' },
           { label: '-', value: '-' }
         ],
+        basicpremirna: [],
         premirna: [],
+        basicmirna: [],
         mirna: [],
         biologicalSource: []
       },
       formOptionValues: {
         chromosome: [],
+        basicpremirna: [],
         premirna: [],
         mirna: [],
+        basicmirna: [],
         biologicalSource: []
       },
       filter: {
@@ -312,7 +423,9 @@ export default {
           end: null,
           strand: null
         },
+        basicpremirna: null,
         premirna: null,
+        basicmirna: null,
         mirna: null,
         biologicalSource: null
       },
@@ -323,7 +436,9 @@ export default {
           end: true,
           strand: true
         },
+        basicpremirna: false,
         premirna: false,
+        basicmirna: false,
         mirna: false,
         biologicalSource: false,
         organism: false,
@@ -334,6 +449,8 @@ export default {
 
   mounted () {
     this.loadOrganismOpts()
+    this.loadBasicPremirnaOpts()
+    this.loadBasicMirnaOpts()
   },
 
   methods: {
@@ -346,19 +463,33 @@ export default {
       this.onReset()
       switch (number) {
         case 1:
-          this.filter.organism = { label: 'Human', value: 'human' }
+          this.filter.organism = {
+            label: 'Human',
+            value: 'human'
+          }
           this.loadEditingOpts(this.filter.organism.value)
-          this.filter.rnaModification = { label: 'A-to-I', value: 'ai' }
-          this.loadOrganismRNAModificationData(this.filter.rnaModification)
+          this.filter.rnaModification = {
+            label: 'A-to-I',
+            value: 'ai'
+          }
           this.filter.chromosome.chromosome = '1'
           this.onSearchFieldUpdate(this.filter.chromosome.chromosome, 'chromosome')
-          this.filter.biologicalSource = ['BLCA (bladder carcinoma)', 'BG01 (Embryonic Stem Cells)', 'Amyotrophic lateral sclerosis (ALS) (spinal cord)']
+          this.filter.biologicalSource = [
+            'BLCA (bladder carcinoma)',
+            'BG01 (Embryonic Stem Cells)',
+            'Amyotrophic lateral sclerosis (ALS) (spinal cord)'
+          ]
           break
         case 2:
-          this.filter.organism = { label: 'Human', value: 'human' }
+          this.filter.organism = {
+            label: 'Human',
+            value: 'human'
+          }
           this.loadEditingOpts(this.filter.organism.value)
-          this.filter.rnaModification = { label: 'A-to-I', value: 'ai' }
-          this.loadOrganismRNAModificationData(this.filter.rnaModification)
+          this.filter.rnaModification = {
+            label: 'A-to-I',
+            value: 'ai'
+          }
           this.filter.premirna = 'hsa-let-7f-1'
           this.onSearchFieldUpdate(this.filter.premirna, 'premirna')
           break
@@ -396,6 +527,22 @@ export default {
       })
     },
 
+    filterBasicPremirnas (value, update) {
+      if (value === '') {
+        update(() => {
+          this.formField.basicpremirna = this.formOptionValues.basicpremirna
+        })
+        return
+      }
+
+      update(() => {
+        const needle = value.toLowerCase()
+        this.formField.basicpremirna = this.formOptionValues.basicpremirna.filter(
+          v => v.toLowerCase().indexOf(needle) > -1
+        )
+      })
+    },
+
     filterPremirnas (value, update) {
       if (value === '') {
         update(() => {
@@ -423,6 +570,22 @@ export default {
       update(() => {
         const needle = value.toLowerCase()
         this.formField.biologicalSource = this.formOptionValues.biologicalSource.filter(
+          v => v.toLowerCase().indexOf(needle) > -1
+        )
+      })
+    },
+
+    filterBasicMirnas (value, update) {
+      if (value === '') {
+        update(() => {
+          this.formField.basicmirna = this.formOptionValues.basicmirna
+        })
+        return
+      }
+
+      update(() => {
+        const needle = value.toLowerCase()
+        this.formField.basicmirna = this.formOptionValues.basicmirna.filter(
           v => v.toLowerCase().indexOf(needle) > -1
         )
       })
@@ -484,6 +647,18 @@ export default {
       )
     },
 
+    formatBasicPremirnaOpts (data) {
+      this.formOptionValues.basicpremirna = this.$utils.selectOpt(data)
+      this.formField.basicpremirna = this.$utils.selectOpt(data)
+    },
+
+    loadBasicPremirnaOpts () {
+      this.$loadApiData(
+        '/premirnas/',
+        this.formatBasicPremirnaOpts
+      )
+    },
+
     formatPremirnaOpts (data) {
       this.formOptionValues.premirna = this.$utils.selectOpt(data)
       this.formField.premirna = this.$utils.selectOpt(data)
@@ -510,6 +685,18 @@ export default {
       )
     },
 
+    formatBasicMirnaOpts (data) {
+      this.formOptionValues.basicmirna = this.$utils.selectOpt(data)
+      this.formField.basicmirna = this.$utils.selectOpt(data)
+    },
+
+    loadBasicMirnaOpts () {
+      this.$loadApiData(
+        '/mirnas/',
+        this.formatBasicMirnaOpts
+      )
+    },
+
     formatBiologicalSourceOpts (data) {
       this.formOptionValues.biologicalSource = this.$utils.selectOpt(data)
       this.formField.biologicalSource = this.$utils.selectOpt(data)
@@ -527,6 +714,13 @@ export default {
       if (this.isObjectNotEmpty(event)) {
         this.releaseFormFields(['organism', 'strand'])
         this.loadEditingOpts(event.value)
+        const payload = {
+          organism: this.filter.organism.value
+        }
+        this.loadChromosomeOpts(payload)
+        this.loadPremirnaOpts(payload)
+        this.loadMirnaOpts(payload)
+        this.loadBiologicalSourceOpts(payload)
       }
     },
 
@@ -541,6 +735,7 @@ export default {
         this.loadChromosomeOpts(payload)
         this.loadPremirnaOpts(payload)
         this.loadMirnaOpts(payload)
+        this.loadBiologicalSourceOpts(payload)
       }
     },
 
@@ -550,37 +745,9 @@ export default {
 
     onSubmit (e) {
       e.preventDefault()
+      const response = {}
 
-      if (!(
-        this.isNotNull(this.filter.organism) &&
-        this.isNotNull(this.filter.rnaModification) &&
-        (
-          this.isNotNull(this.filter.chromosome.chromosome) ||
-          this.isNotNull(this.filter.premirna) ||
-          this.isNotNull(this.filter.mirna)
-        ))) {
-        this.$q.notify({
-          color: 'red-7',
-          textColor: 'white',
-          icon: 'warning',
-          message: 'Error. Please, select among the options chromosome, pre-miRNA, or miRNA.',
-          position: 'top',
-          progress: true
-        })
-      } else {
-        this.openDialogSearchForm()
-
-        this.$q.notify({
-          color: 'green-4',
-          textColor: 'white',
-          icon: 'cloud_download',
-          message: 'Fetching data...',
-          position: 'top',
-          progress: true
-        })
-
-        const response = {}
-
+      if (e.target.id === 'advancedSearchForm') {
         if (this.isNotNull(this.filter.organism)) {
           response.organism = this.filter.organism.value
         }
@@ -615,6 +782,36 @@ export default {
         if (this.isObjectNotEmpty(this.filter.biologicalSource)) {
           response.biological_source = this.filter.biologicalSource.join(';')
         }
+      } else if (e.target.id === 'basicSearchForm') {
+        if (this.isNotNull(this.filter.basicmirna)) {
+          response.mirna = this.filter.basicmirna
+        }
+      } else if (e.target.id === 'basicSearchForm2') {
+        if (this.isNotNull(this.filter.basicpremirna)) {
+          response.stemloop = this.filter.basicpremirna
+        }
+      }
+
+      if (!this.isObjectNotEmpty(response)) {
+        this.$q.notify({
+          color: 'red-7',
+          textColor: 'white',
+          icon: 'warning',
+          message: 'Error. Please, fill out the form.',
+          position: 'top',
+          progress: true
+        })
+      } else {
+        this.openDialogSearchForm()
+
+        this.$q.notify({
+          color: 'green-4',
+          textColor: 'white',
+          icon: 'cloud_download',
+          message: 'Fetching data...',
+          position: 'top',
+          progress: true
+        })
 
         this.$emit('sendSearchResponse', response)
         this.$store.commit('showcase/updateSearchTabPanels', false)
@@ -650,6 +847,8 @@ export default {
         }
       }
       this.loadOrganismOpts()
+      this.loadBasicMirnaOpts()
+      this.loadBasicPremirnaOpts()
     },
 
     releaseFormFields (discard = []) {
@@ -700,7 +899,7 @@ export default {
         this.updateFieldAccess(key, ['biologicalSource'])
         const payload = {
           organism: this.filter.organism.value,
-          mod_type: this.filter.rnaModification.value,
+          mod_type: this.isObjectNotEmpty(this.filter.rnaModification) ? this.filter.rnaModification.value : null,
           chromosome: this.filter.chromosome.chromosome,
           stemloop: this.filter.premirna,
           mirna: this.filter.mirna

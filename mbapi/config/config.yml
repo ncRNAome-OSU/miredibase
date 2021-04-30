@@ -1,5 +1,5 @@
 fastapi:
-  debug: true
+  debug: false
 databases:
   default:
     ENGINE: 'mongodb'

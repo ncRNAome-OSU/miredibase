@@ -51,7 +51,7 @@
         <template slot="header" slot-scope="props" :props="props" style="display: contents">
           <q-tr>
             <q-th colspan="1"></q-th>
-            <q-th colspan="3" class="bg-purple-9 text-white">
+            <q-th colspan="3" class="bg-blue-grey-9 text-white">
               Physiological/pathological condition
             </q-th>
             <q-th colspan="3" class="bg-light-blue-9 text-white">
@@ -66,26 +66,26 @@
             <q-th colspan="2" class="bg-deep-orange-9 text-white">
               Editing in miRNA (%)
             </q-th>
-            <q-th colspan="1" class="bg-light-green-9 text-white">
+            <q-th colspan="1" class="bg-lime-9 text-white">
               Adverse condition
             </q-th>
           </q-tr>
           <q-tr>
             <q-th key="name" :props="props">#</q-th>
             <q-th
-              key="biologicalSource" :props="props" class="bg-purple-5 text-white">
+              key="biologicalSource" :props="props" class="bg-blue-grey-7 text-white">
               Biological<br/>Source
             </q-th>
-            <q-th key="origin" :props="props" class="bg-purple-7 text-white">
+            <q-th key="origin" :props="props" class="bg-blue-grey-8 text-white">
               Origin
             </q-th>
-            <q-th key="condition" :props="props" class="bg-purple-9 text-white">
+            <q-th key="condition" :props="props" class="bg-blue-grey-9 text-white">
               Condition
             </q-th>
-            <q-th key="inVitro" :props="props" class="bg-light-blue-5 text-white">
+            <q-th key="inVitro" :props="props" class="bg-light-blue-3 text-grey-9">
               In vitro
             </q-th>
-            <q-th key="exVivo" :props="props" class="bg-light-blue-7 text-white">
+            <q-th key="exVivo" :props="props" class="bg-light-blue-6 text-white">
               Ex vivo
             </q-th>
             <q-th key="inVivo" :props="props" class="bg-light-blue-9 text-white">
@@ -109,7 +109,7 @@
             <q-th key="editMirnaTo" :props="props" class="bg-deep-orange-8 text-white">
               To
             </q-th>
-            <q-th key="ppcComparedWith" :props="props" class="bg-light-green-8 text-white">
+            <q-th key="ppcComparedWith" :props="props" class="bg-lime-9 text-white">
               Compared with
             </q-th>
           </q-tr>

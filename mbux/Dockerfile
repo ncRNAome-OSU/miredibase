@@ -8,7 +8,6 @@ COPY . .
 # build stage
 FROM develop-stage as build-stage
 RUN yarn
-#RUN npm rebuild node-sass
 RUN quasar build --modern
 
 # production stage

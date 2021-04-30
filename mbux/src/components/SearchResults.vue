@@ -4,7 +4,7 @@
       <div class="q-pa-xs">
         <p class="text-justify text-weight-light">
           <helper>
-            Click on the red icons to display summary tables.
+            Click on the red icons to display the variant details.
           </helper>
           Here you can explore overview information and the
           list of available studies for each RNA modification site. Thermodynamic and functional predictions are
@@ -105,17 +105,6 @@ export default {
       snvData: {},
       searchTabPanel: 'tab1',
       studyDataBeforePanelSwitch: {},
-      svnDataDetailsLabelsOrdering: [
-        'organism',
-        'mod_type',
-        'chromosome',
-        'strand',
-        'genomic_position',
-        'stemloop',
-        'stemloop_local_pos',
-        'mirna',
-        'mirna_local_pos'
-      ],
       snvDataDetails: {}
     }
   },
@@ -160,6 +149,7 @@ export default {
         if (this.isNotNull(this.$store.state.showcase.filterByBiologicalSources)) {
           payload.biological_source = this.$store.state.showcase.filterByBiologicalSources
         }
+
         this.$loadApiData(
           '/organisms/rnaeditingsites/detail/',
           this.setSingleSNVData,

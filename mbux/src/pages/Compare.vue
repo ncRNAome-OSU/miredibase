@@ -32,6 +32,7 @@ export default {
           'name',
           'organism',
           'modType',
+          'conservation',
           'author',
           'year',
           'pubmedId',
@@ -69,6 +70,13 @@ export default {
             name: 'modType',
             label: 'RNA Editing type',
             field: 'mod_type',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            name: 'conservation',
+            label: 'Conservation',
+            field: 'conservation',
             sortable: true,
             align: 'center'
           },
