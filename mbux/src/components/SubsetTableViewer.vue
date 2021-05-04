@@ -55,10 +55,10 @@
             </q-tr>
           </template>
 
-          <template v-for="(item, key, index) in specialColumns" :slot="`body-cell-${item.name}`" slot-scope="props" :props="props">
+          <template v-for="(item) in specialColumns" :slot="`body-cell-${item.name}`" slot-scope="props" :props="props">
             <q-td
               :props="props"
-              :key="key"
+              :key="item.name"
               :style="item.style"
             >
               <template v-if="isObjectNotEmpty(item.link) && item.link !== ''">

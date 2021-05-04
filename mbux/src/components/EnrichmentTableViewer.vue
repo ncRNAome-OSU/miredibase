@@ -40,10 +40,10 @@
         </helper>
       </q-th>
 
-      <template v-for="(item, key, index) in table.specialColumns" :slot="`body-cell-${item.name}`" slot-scope="props" :props="props">
+      <template v-for="(item) in table.specialColumns" :slot="`body-cell-${item.name}`" slot-scope="props" :props="props">
         <q-td
           :props="props"
-          :key="key"
+          :key="item.name"
           class="fill-area-content flexbox-item-grow col-2"
           :style="item.style"
         >
